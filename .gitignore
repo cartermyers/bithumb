@@ -1,0 +1,5 @@
+# Python compiled files are no use to us.
+*.pyc
+
+# And any db files should be ignored to separate dev/prod/test stuff
+*.sqlite3
