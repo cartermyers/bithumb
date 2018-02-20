@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     #created apps:
     'game.apps.GameConfig',
     'account.apps.AccountConfig',
+    'invest.apps.InvestConfig',
 
     #default apps:
     'django.contrib.admin',

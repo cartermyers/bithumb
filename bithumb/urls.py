@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^game/', include('game.urls')),
     url(r'^account/', include('account.urls')),
+    url(r'^invest/', include('invest.urls')),
 ]
