@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     #created apps:
     'game.apps.GameConfig',
+    'account.apps.AccountConfig',
 
     #default apps:
     'django.contrib.admin',
