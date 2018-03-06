@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import login, logout
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.hashers import make_password
 
 from . import forms, models
 
@@ -14,7 +15,9 @@ def signup(request):
 
         if form.is_valid():
             #save the new object
-            new_user = form.save(commit=True)
+            new_user = form.save(commit=False)
+            new_user.set_password(make_password(form.cleaned_data['password']))
+            new_user.save()
 
             #login the new user
             login(request, new_user)

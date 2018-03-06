@@ -12,6 +12,8 @@ class User(AbstractUser):
 
     #TODO: setters and getters
 
+    def set_password(self, new_pass):
+        self.password = new_pass
 
 
 

@@ -16,10 +16,12 @@ class UserForm(forms.ModelForm):
         cleaned_data = super(UserForm, self).clean()
 
         #make sure the password is valid:
-        if not password_validation.validate_password(cleaned_data['password']):
-            self.add_error('password', password_validation.password_validators_help_texts())
-        else:
-            if cleaned_data['password'] != cleaned_data['confirm_password']:
-                self.add_error('confirm_password', "Passwords do not match.")
+        password = cleaned_data['password']
+        confirm = cleaned_data['confirm_password']
+
+        password_validation.validate_password(password)
+
+        if password != confirm:
+            self.add_error('confirm_password', "Passwords do not match.")
 
 #there is no admin form because they should be registered by developers
