@@ -1,3 +1,12 @@
-This is where users can sign up.
+This is where users can sign up. <br />
 
-This app/directory is also where all the other account stuff will go (log in, settings, etc.)
+This app/directory is also where all the other account stuff will go (log in, settings, etc)<br />
+
+
+Here is the form.<br />
+
+<form method="POST" action="{% url 'account:signup' %}">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Sign Up</button>
+</form>
