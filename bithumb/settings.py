@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'game.apps.GameConfig',
     'account.apps.AccountConfig',
     'invest.apps.InvestConfig',
+    'forum.apps.ForumConfig',
 
     #default apps:
     'django.contrib.admin',
