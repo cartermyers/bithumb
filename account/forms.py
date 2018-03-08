@@ -3,7 +3,7 @@ from django.contrib.auth import password_validation
 
 from . import models
 
-class UserForm(forms.ModelForm):
+class SignupForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
 
@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 
     def clean(self):
         #first, clean using the superclass
-        cleaned_data = super(UserForm, self).clean()
+        cleaned_data = super(SignupForm, self).clean()
 
         #make sure the password is valid:
         password = cleaned_data['password']
@@ -25,3 +25,8 @@ class UserForm(forms.ModelForm):
             self.add_error('confirm_password', "Passwords do not match.")
 
 #there is no admin form because they should be registered by developers
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput())
+    keep_me_logged_in = forms.BooleanField(required=False)

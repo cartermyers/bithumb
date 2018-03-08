@@ -1,0 +1,11 @@
+Here is the login:<br />
+
+<form method="POST" action="{% url 'account:login' %}
+{% if request.GET.next %}
+?next={{request.GET.next}}
+{% endif %}">
+
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Sign Up</button>
+</form>
