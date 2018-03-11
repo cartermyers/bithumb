@@ -7,17 +7,17 @@ class BankAccount(models.Model):
     #see https://en.bitcoin.it/wiki/Units
     #min value is 1 satoshi (8 decimal places)
     #and max value is 1,000,000 bitcoins (hence 15 total digits)
-    _bitcoins = models.DecimalField(max_digits=15, decimal_places=8, default=0)
+    bitcoins = models.DecimalField(max_digits=15, decimal_places=8, default=0)
 
     #actual in game currency (analagous to CAD, hence 2 decimal places)
     #and we'll say max 999,999,999,999,999 (so 17 total digits)
-    _in_game_currency = models.DecimalField(max_digits=17, decimal_places=2, default=0)
+    in_game_currency = models.DecimalField(max_digits=17, decimal_places=2, default=0)
 
     def get_bitcoins(self):
-        return float(self._bitcoins)
+        return float(self.bitcoins)
 
     def get_in_game_currency(self):
-        return float(self._in_game_currency)
+        return float(self.in_game_currency)
 
     #TODO: setters
     #also convert (private), and withdraw and deposit (both for investments) OR do these belong as views?

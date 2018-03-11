@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import make_password
 
 from . import forms, models
-from invest.models import BankAccount
 
 def signup_view(request):
 

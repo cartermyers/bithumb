@@ -12,14 +12,14 @@ class User(AbstractUser):
         Any fields that we are using should be in accounts.forms under SignupForm"""
 
     #a game highscore (to be changed later based on implementation)
-    _highscore = models.DecimalField(max_digits=20, decimal_places=0, default=0)
-    _bank_account = models.OneToOneField(BankAccount, on_delete=models.DO_NOTHING, primary_key=True)
+    highscore = models.DecimalField(max_digits=20, decimal_places=0, default=0)
+    bank_account = models.OneToOneField(BankAccount, on_delete=models.DO_NOTHING, primary_key=True)
 
     def save(self, *args, **kwargs):
         #we also need to create a corresponding bank account for each new user
         # (new users will not have a bank account id)
-        if not self._bank_account_id:
-            self._bank_account = BankAccount.objects.get_or_create(pk=self.pk)[0]
+        if not self.bank_account_id:
+            self.bank_account = BankAccount.objects.get_or_create(pk=self.pk)[0]
 
         super(AbstractUser, self).save(*args, **kwargs)
 
@@ -27,7 +27,7 @@ class User(AbstractUser):
         #and delete the BankAccount too
         # (just except any errors for robustness)
         try:
-            BankAccount.objects.get(pk=self._bank_account_id).delete()
+            BankAccount.objects.get(pk=self.bank_account_id).delete()
         except BankAccount.DoesNotExist:
             pass
 
@@ -37,15 +37,15 @@ class User(AbstractUser):
     def set_password(self, new_pass):
         self.password = new_pass
 
-    def set_highscore(self, new_high):
-        self._highscore = new_high
+    def sethighscore(self, new_high):
+        self.highscore = new_high
 
     #getters
     def get_highscore(self):
-        return self._highscore
+        return self.highscore
 
     def get_bank_account(self):
-        return BankAccount.objects.get(pk=self._bank_account_id)
+        return BankAccount.objects.get(pk=self.bank_account_id)
 
 
 
