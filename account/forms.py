@@ -30,4 +30,4 @@ class SignupForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
-    keep_me_logged_in = forms.BooleanField(required=False)
+    keep_me_logged_in = forms.BooleanField(required=False, widget=forms.CheckboxInput(attrs={'id': 'show_label'}))

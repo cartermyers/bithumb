@@ -33,24 +33,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
                 </li>
-                <!-- if request.user.is_authenticated -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
                 </li>
-                <!-- endif -->
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
             </ul>
-            <!-- if not request.user.is_authenticated  -->
-            <!-- TODO: maybe put the invest and profile tags here to clean up the top bar? ALSO A LOGOUT-->
             <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
+                </li>
+            {% else %}
                 <li class="nav-item active">
                     <div class="btn-group">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,6 +93,9 @@
                                   {% for field in login_form %}
                                   <div class="form-group">
                                       {{ field.errors }}
+                                      {% ifequal field.id_for_label 'show_label' %}
+                                        {{ field.label }}
+                                      {% endifequal %}
                                       {{ field }}
                                   </div>
                                   {% endfor %}
@@ -99,8 +105,8 @@
                                   </form>
                               </div>
                 </li>
+            {% endif %}
             </ul>
-            <!-- endif -->
         </div>
     </nav>
     <div class="container mt-5">
