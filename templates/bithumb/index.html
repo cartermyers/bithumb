@@ -33,74 +33,80 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
                 </li>
-                <!-- if request.user.is_authenticated -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
                 </li>
-                <!-- endif -->
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
             </ul>
-            <!-- if not request.user.is_authenticated  -->
-            <!-- TODO: maybe put the invest and profile tags here to clean up the top bar? -->
             <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
+                </li>
+            {% else %}
                 <li class="nav-item active">
-                    <div class="btn-group">
+                    <div class="btn-group {% if signup_form.non_field_errors %} show {% endif %}}">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Signup
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right p-3">
+                        <div class="dropdown-menu dropdown-menu-right p-3 {% if signup_form.non_field_errors %} show {% endif %}}">
                             <div class="my-3">
                                 <h3>Sign Up</h3>
                             </div>
-                            <form action="" style="width: 300px;">
-                                <!-- TODO: make form junk here -->
+                            <form method="POST" action="{% url 'account:signup' %}" style="width: 300px;">
+                            {% csrf_token %}
+                            {{ signup_form.non_field_errors }}
+                            {% for field in signup_form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field }}
+                            </div>
+                            {% endfor %}
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="verify password">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-dark float-right">Sign Up</button>
+                                    <button type="submit" class="btn btn-dark float-right">Sign Up</button>
                                 </div>
                             </form>
                         </div>
                       </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if login_form.non_field_errors %} show {% endif %}}">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Login
                               </a>
-                              <div class="dropdown-menu dropdown-menu-right p-3">
+                              <div class="dropdown-menu dropdown-menu-right p-3 {% if login_form.non_field_errors %} show {% endif %}}">
                                   <div class="my-3">
                                       <h3>Login</h3>
                                   </div>
-                                  <form action="" style="width: 300px;">
+                                  <form method="POST" action="{% url 'account:login' %}" style="width: 300px;">
+                                  {% csrf_token %}
+                                  {{ login_form.non_field_errors }}
+                                  {% for field in login_form %}
+                                  <div class="form-group">
+                                      {{ field.errors }}
+                                      {% ifequal field.id_for_label 'show_label' %}
+                                        {{ field.label }}
+                                      {% endifequal %}
+                                      {{ field }}
+                                  </div>
+                                  {% endfor %}
                                       <div class="form-group">
-                                          <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                      </div>
-                                      <div class="form-group">
-                                          <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                      </div>
-                                      <div class="form-group">
-                                          <button class="btn btn-dark float-right">Login</button>
+                                          <button type="submit" class="btn btn-dark float-right">Login</button>
                                       </div>
                                   </form>
                               </div>
                 </li>
+            {% endif %}
             </ul>
-            <!-- endif -->
         </div>
     </nav>
     <div class="container mt-5">
