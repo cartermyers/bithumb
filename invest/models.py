@@ -3,25 +3,21 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from account.models import User
-
 class BankAccount(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-
     #see https://en.bitcoin.it/wiki/Units
     #min value is 1 satoshi (8 decimal places)
     #and max value is 1,000,000 bitcoins (hence 15 total digits)
-    bitcoins = models.DecimalField(max_digits=15, decimal_places=8)
+    _bitcoins = models.DecimalField(max_digits=15, decimal_places=8, default=0)
 
     #actual in game currency (analagous to CAD, hence 2 decimal places)
     #and we'll say max 999,999,999,999,999 (so 17 total digits)
-    in_game_currency = models.DecimalField(max_digits=17, decimal_places=2)
+    _in_game_currency = models.DecimalField(max_digits=17, decimal_places=2, default=0)
 
     def get_bitcoins(self):
-        return float(self.bitcoins)
+        return float(self._bitcoins)
 
     def get_in_game_currency(self):
-        return float(self.in_game_currency)
+        return float(self._in_game_currency)
 
     #TODO: setters
     #also convert (private), and withdraw and deposit (both for investments) OR do these belong as views?
