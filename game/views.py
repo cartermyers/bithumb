@@ -3,5 +3,5 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-def main_game(request):
-    return render(request, 'game/main_game.html')
+def scoreboard(request):
+    return render(request, 'game/scoreboard.html')

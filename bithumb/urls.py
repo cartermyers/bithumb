@@ -21,6 +21,9 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^about/$', views.about, name='about'),
+
+    #included urls:
     url(r'^game/', include('game.urls', namespace='game')),
     url(r'^account/', include('account.urls', namespace='account')),
     url(r'^invest/', include('invest.urls', namespace='invest')),

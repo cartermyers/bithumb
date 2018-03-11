@@ -7,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import make_password
 
+<<<<<<< HEAD
 from . import forms, models
 
 def signup_view(request):
