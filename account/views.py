@@ -73,7 +73,7 @@ def profile(request, user_id=None):
 
     user = get_object_or_404(models.User, pk=user_id)
 
-    return render(request, 'account/profile.html', {'user_profile': user})
+    return render(request, 'account/profile.html', {'user': user})
 
 def logout_view(request):
     logout(request)

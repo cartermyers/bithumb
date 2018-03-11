@@ -55,11 +55,11 @@
                 </li>
             {% else %}
                 <li class="nav-item active">
-                    <div class="btn-group">
+                    <div class="btn-group {% if signup_form.non_field_errors %} show {% endif %}}">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Signup
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right p-3">
+                        <div class="dropdown-menu dropdown-menu-right p-3 {% if signup_form.non_field_errors %} show {% endif %}}">
                             <div class="my-3">
                                 <h3>Sign Up</h3>
                             </div>
@@ -79,11 +79,11 @@
                         </div>
                       </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {% if login_form.non_field_errors %} show {% endif %}}">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Login
                               </a>
-                              <div class="dropdown-menu dropdown-menu-right p-3">
+                              <div class="dropdown-menu dropdown-menu-right p-3 {% if login_form.non_field_errors %} show {% endif %}}">
                                   <div class="my-3">
                                       <h3>Login</h3>
                                   </div>

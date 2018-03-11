@@ -23,7 +23,7 @@ class SignupForm(forms.ModelForm):
         password_validation.validate_password(password)
 
         if password != confirm:
-            self.add_error('confirm_password', "Passwords do not match.")
+            self.add_error(None, "Passwords do not match.")
 
 #there is no admin form because they should be registered by developers
 

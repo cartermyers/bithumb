@@ -35,68 +35,27 @@
                     <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
             </ul>
-            <!-- again, TODO -->
+            {% if request.user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <div class="btn-group">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Signup
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right p-3">
-                            <div class="my-3">
-                                <h3>Sign Up</h3>
-                            </div>
-                            <form action="" style="width: 300px;">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="verify password">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-dark float-right">Sign Up</button>
-                                </div>
-                            </form>
-                        </div>
-                      </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Login
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right p-3">
-                                  <div class="my-3">
-                                      <h3>Login</h3>
-                                  </div>
-                                  <form action="" style="width: 300px;">
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                      </div>
-                                      <div class="form-group">
-                                          <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                      </div>
-                                      <div class="form-group">
-                                          <button class="btn btn-dark float-right">Login</button>
-                                      </div>
-                                  </form>
-                              </div>
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
                 </li>
             </ul>
+            {% endif %}
         </div>
     </nav>
     <div class="container mt-5">
@@ -107,7 +66,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <p>ID : Juno Shin</p>
+                <p>Username : {{ user.username }}</p>
                 <p>Game Points : 10 pts</p>
                 <p>Bitcoin : 10 BTC</p>
                 <p>CAD $ : $10</p>
