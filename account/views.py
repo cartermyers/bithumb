@@ -7,7 +7,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import make_password
 
-<<<<<<< HEAD
 from . import forms, models
 
 def signup_view(request):
@@ -15,14 +14,15 @@ def signup_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse('account:myprofile'))
 
+    login_form = forms.LoginForm()
 
     if request.method == 'POST':
-        form = forms.SignupForm(request.POST)
+        signup_form = forms.SignupForm(request.POST)
 
-        if form.is_valid():
+        if signup_form.is_valid():
             #save the new object
-            new_user = form.save(commit=False)
-            new_user.set_password(make_password(form.cleaned_data['password']))
+            new_user = signup_form.save(commit=False)
+            new_user.set_password(make_password(signup_form.cleaned_data['password']))
             new_user.save()
 
             #login the new user
@@ -31,9 +31,9 @@ def signup_view(request):
             #redirect to profile
             return HttpResponseRedirect(reverse('account:myprofile'))
     else:
-        form = forms.SignupForm()
+        signup_form = forms.SignupForm()
 
-    return render(request, 'account/signup.html', {'form': form})
+    return render(request, 'bithumb/index.html', {'signup_form': signup_form, 'login_form': login_form})
 
 def login_view(request):
 
@@ -43,26 +43,28 @@ def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(redirect)
 
-    if request.method == 'POST':
-        form = forms.LoginForm(request.POST)
+    signup_form = forms.LoginForm()
 
-        if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+    if request.method == 'POST':
+        login_form = forms.LoginForm(request.POST)
+
+        if login_form.is_valid():
+            user = authenticate(request, username=login_form.cleaned_data['username'], password=login_form.cleaned_data['password'])
 
             # if user is not None, then there are no errors
             if user:
                 login(request, user)
-                if form.cleaned_data['keep_me_logged_in']:
+                if login_form.cleaned_data['keep_me_logged_in']:
                     request.session.set_expiry(60 * 60 * 24 * 10) # set expiry for 10 days
                 #else, uses the default expiry at browser close
 
                 return HttpResponseRedirect(redirect)
             else:
-                form.add_error(None, 'Those are invalid credentials. Please try again.')
+                login_form.add_error(None, 'Those are invalid credentials. Please try again.')
     else:
-        form = forms.LoginForm()
+        login_form = forms.LoginForm()
 
-    return render(request, 'account/login.html', {'form': form})
+    return render(request, 'bithumb/index.html', {'signup_form': signup_form, 'login_form': login_form})
 
 
 def profile(request, user_id=None):
