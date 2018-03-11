@@ -21,8 +21,11 @@ from . import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^game/', include('game.urls')),
-    url(r'^account/', include('account.urls')),
-    url(r'^invest/', include('invest.urls')),
-    url(r'^forum/', include('forum.urls')),
+    url(r'^about/$', views.about, name='about'),
+
+    #included urls:
+    url(r'^game/', include('game.urls', namespace='game')),
+    url(r'^account/', include('account.urls', namespace='account')),
+    url(r'^invest/', include('invest.urls', namespace='invest')),
+    url(r'^forum/', include('forum.urls', namespace='forum')),
 ]
