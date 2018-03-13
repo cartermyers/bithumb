@@ -14,7 +14,21 @@ def all_forums(request):
 def forum(request, forum_id):
     forum = get_object_or_404(models.Forum, pk=forum_id)
 
-    return render(request, 'forum/forum.html', {'forum': forum})
+    if request.method == "POST" and request.user.is_authenticated:
+        comment_form = forms.CommentForm(request.POST)
+
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.set_user(request.user)
+            new_comment.set_post(forum)
+            new_comment.save()
+
+            #after saving the comment, return back to the same page (with new blank form)
+            comment_form = forms.CommentForm()
+    else:
+        comment_form = forms.CommentForm()
+
+    return render(request, 'forum/forum.html', {'forum': forum, 'comment_form': comment_form})
 
 @login_required
 def post_forum(request):

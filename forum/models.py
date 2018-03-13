@@ -32,6 +32,11 @@ class Comments(models.Model):
     def __str__(self):
         return self.text
 
+    def set_user(self, new_user):
+        self.user = new_user
+
+    def set_post(self, new_post):
+        self.post = new_post
     #TODO: setters and getters
 
     #also observer methods? maybe a mixin?

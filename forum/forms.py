@@ -10,3 +10,9 @@ class ForumForm(forms.ModelForm):
     class Meta:
         model = models.Forum
         fields = ['title', 'description']
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Comments
+        fields = ['text']

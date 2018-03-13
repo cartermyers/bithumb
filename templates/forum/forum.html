@@ -19,3 +19,12 @@ And here are all of its comments:<br/><br/>
     posted at: {{ comment.time }}<br/><br/>
 
 {% endfor %}
+
+{% if request.user.is_authenticated %}
+And here is a form for new comments:<br /><br />
+<form method="POST" action="" style="width: 300px;">
+{% csrf_token %}
+{{ comment_form.as_p }}
+<button type="submit">Post</button>
+</form>
+{% endif %}
