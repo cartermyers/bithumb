@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'invest.apps.InvestConfig',
     'forum.apps.ForumConfig',
 
+    #third-party apps 
+    'easy_thumbnails',
+
     #default apps:
     'django.contrib.admin',
     'django.contrib.auth',
