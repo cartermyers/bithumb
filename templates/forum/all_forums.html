@@ -1,1 +1,27 @@
-Here is a page where all of the forum posts will go.
+Here is a page where all of the forum posts will go.<br/><br/>
+
+{% for forum in forums %}
+Title: <a href="{% url 'forum:forum' forum_id=forum.pk %}">{{ forum.title }}</a><br/>
+Poster: {{ forum.poster }}<br/>
+Posted at: {{ forum.time }}<br/><br/>
+{% endfor %}
+
+
+
+{% if forums.has_previous %}
+<a href="?page={{ forums.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% if forums.has_previous or forums.has_next %}
+{% for i in page_range %}
+{% ifequal i current_page %}
+    {{ i }}
+{% else %}
+    <a href="?page={{ i }}">{{ i }}</a>
+{% endifequal %}
+{% endfor %}
+{% endif %}
+
+{% if forums.has_next %}
+<a href="?page={{ forums.next_page_number }}" class="next">Next</a>
+{% endif %}

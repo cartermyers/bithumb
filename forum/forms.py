@@ -5,7 +5,7 @@ from . import models
 class ForumForm(forms.ModelForm):
     # may be needed for later
     #title = forms.CharField(widget=forms.CharField(attrs={'class': 'form-control', 'placeholder': 'Password'}))
-    #description = forms.CharField(widget=forms.CharField(attrs={'class': 'form-control', 'placeholder': 'Verify Password'}))
+    description = forms.CharField(widget=forms.Textarea(), required=False)
 
     class Meta:
         model = models.Forum

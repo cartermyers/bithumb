@@ -5,11 +5,37 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from . import forms, models
 
 def all_forums(request):
-    return render(request, 'forum/all_forums.html')
+
+    forum_list = models.Forum.objects.all()
+    items_per_page = 10
+
+    page_list = Paginator(forum_list, items_per_page)
+
+    """ Here is some code from https://docs.djangoproject.com/en/1.11/topics/pagination/ """
+    current_page = request.GET.get('page', None)
+    try:
+        forums = page_list.page(current_page)
+        current_page = int(current_page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        forums = page_list.page(1)
+        current_page = 1
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        forums = page_list.page(page_list.num_pages)
+        current_page = page_list.num_pages
+
+    # do some calculations to find a number of next pages
+    start_page = max(0, current_page - 3)
+    end_page = min(page_list.num_pages, current_page + 3)
+    page_range = range(start_page + 1, end_page + 1)
+
+    return render(request, 'forum/all_forums.html', {'forums': forums, 'current_page': current_page, 'page_range': page_range})
 
 def forum(request, forum_id):
     forum = get_object_or_404(models.Forum, pk=forum_id)

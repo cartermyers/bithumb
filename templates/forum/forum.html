@@ -1,10 +1,13 @@
 Here is a specfic forum.<br/ ><br/>
 
+<!-- TODO: maybe use the truncation thing for long titles -->
 title; {{ forum.title }}<br/><br/>
 
 posted by: {{ forum.poster }}<br/><br/>
 
+{% if forum.description %}
 description: {{ forum.description }}<br/><br/>
+{% endif %}
 
 posted at: {{ forum.time }} <br/><br/>
 
