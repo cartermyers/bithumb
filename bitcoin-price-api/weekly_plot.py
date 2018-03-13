@@ -3,6 +3,9 @@
 # and bitcoin-price-api.
 # It creates a .png image and saves it to ../static/img/weekly_prices.png
 
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from exchanges import CoinDesk
 
@@ -13,7 +16,7 @@ def plot_historical_price(start='2018-01-01', end=None):
     x_labels = [row['date'][5:] for row in history]
 
     x_values = range(len(x_labels))
-    y_values = [row['price'] for row in history]
+    y_values = [float(row['price']) for row in history]
 
     plt.xlabel('Date  (MM-DD)')
     plt.xticks(x_values, x_labels)
