@@ -122,6 +122,8 @@ PASSWORD_HASHERS = [
 
 AUTH_USER_MODEL = 'account.User'
 
+LOGIN_URL = '/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 

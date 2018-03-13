@@ -1,0 +1,21 @@
+Here is a specfic forum.<br/ ><br/>
+
+title; {{ forum.title }}<br/><br/>
+
+posted by: {{ forum.poster }}<br/><br/>
+
+description: {{ forum.description }}<br/><br/>
+
+posted at: {{ forum.time }} <br/><br/>
+
+And here are all of its comments:<br/><br/>
+
+{% for comment in forum.comments_set.all %}
+
+    {{ comment.text }}<br/><br/>
+
+    posted by: {{ comment.user }}<br/><br/>
+
+    posted at: {{ comment.time }}<br/><br/>
+
+{% endfor %}

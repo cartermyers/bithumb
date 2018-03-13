@@ -16,6 +16,9 @@ class Forum(models.Model):
     def __str__(self):
         return self.title
 
+    def set_poster(self, user):
+        self.poster = user
+
     #TODO: setters and getters
     #also observer methods
 
