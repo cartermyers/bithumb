@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'invest.apps.InvestConfig',
     'forum.apps.ForumConfig',
 
-    #third-party apps 
+    #third-party apps
     'easy_thumbnails',
 
     #default apps:
@@ -127,7 +127,7 @@ AUTH_USER_MODEL = 'account.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Canada/Saskatchewan'
 
 USE_I18N = True
 
