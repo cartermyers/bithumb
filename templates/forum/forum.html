@@ -1,25 +1,34 @@
 Here is a specfic forum.<br/ ><br/>
 
 <!-- TODO: maybe use the truncation thing for long titles -->
-title; {{ forum.title }}<br/><br/>
+title; {{ forum.title }}<br/>
 
-posted by: {{ forum.poster }}<br/><br/>
+posted by: {{ forum.poster }}<br/>
 
 {% if forum.description %}
-description: {{ forum.description }}<br/><br/>
+description: {{ forum.description }}<br/>
 {% endif %}
 
-posted at: {{ forum.time }} <br/><br/>
+{% ifequal request.user.pk forum.poster_id %}
+    <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}">Delete</a><br/>
+{% endifequal %}
+
+posted at: {{ forum.time }} <br/>
 
 And here are all of its comments:<br/><br/>
 
 {% for comment in forum.comments_set.all %}
 
-    {{ comment.text }}<br/><br/>
+    {{ comment.text }}<br/>
 
-    posted by: {{ comment.user }}<br/><br/>
+    posted by: {{ comment.user }}<br/>
 
-    posted at: {{ comment.time }}<br/><br/>
+    posted at: {{ comment.time }}<br/>
+
+    {% ifequal request.user.pk comment.user_id %}
+        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}">Delete</a><br/>
+    {% endifequal %}
+    <br/><br/>
 
 {% endfor %}
 

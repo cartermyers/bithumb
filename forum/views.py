@@ -37,6 +37,7 @@ def all_forums(request):
 
     return render(request, 'forum/all_forums.html', {'forums': forums, 'current_page': current_page, 'page_range': page_range})
 
+#This also handles the comment posting
 def forum(request, forum_id):
     forum = get_object_or_404(models.Forum, pk=forum_id)
 
@@ -71,3 +72,21 @@ def post_forum(request):
         form = forms.ForumForm()
 
     return render(request, 'forum/new_forum.html', {'form': form})
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = models.Comments.objects.get(pk=comment_id)
+
+    if comment.user_id == request.user.pk:
+        comment.delete()
+
+    return HttpResponseRedirect(reverse('forum:forum', kwargs={'forum_id': comment.post_id}))
+
+@login_required
+def delete_forum(request, forum_id):
+    forum = models.Forum.objects.get(pk=forum_id)
+
+    if forum.poster_id == request.user.pk:
+        forum.delete()
+
+    return HttpResponseRedirect(reverse('forum:all_forums'))
