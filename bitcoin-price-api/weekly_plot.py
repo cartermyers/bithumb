@@ -3,7 +3,6 @@
 # and bitcoin-price-api.
 # It creates a .png image and saves it to ../static/img/weekly_prices.png
 
-#make sure we use a non-windows back-end:
 import matplotlib
 matplotlib.use('Agg')
 

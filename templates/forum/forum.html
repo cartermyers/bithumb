@@ -1,0 +1,42 @@
+Here is a specfic forum.<br/ ><br/>
+
+<!-- TODO: maybe use the truncation thing for long titles -->
+title; {{ forum.title }}<br/>
+
+posted by: {{ forum.poster }}<br/>
+
+{% if forum.description %}
+description: {{ forum.description }}<br/>
+{% endif %}
+
+{% ifequal request.user.pk forum.poster_id %}
+    <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}">Delete</a><br/>
+{% endifequal %}
+
+posted at: {{ forum.time }} <br/>
+
+And here are all of its comments:<br/><br/>
+
+{% for comment in forum.comments_set.all %}
+
+    {{ comment.text }}<br/>
+
+    posted by: {{ comment.user }}<br/>
+
+    posted at: {{ comment.time }}<br/>
+
+    {% ifequal request.user.pk comment.user_id %}
+        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}">Delete</a><br/>
+    {% endifequal %}
+    <br/><br/>
+
+{% endfor %}
+
+{% if request.user.is_authenticated %}
+And here is a form for new comments:<br /><br />
+<form method="POST" action="" style="width: 300px;">
+{% csrf_token %}
+{{ comment_form.as_p }}
+<button type="submit">Post</button>
+</form>
+{% endif %}
