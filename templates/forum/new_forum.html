@@ -1,0 +1,7 @@
+Here is a form for a new forum:<br/>
+
+<form method="POST" action="{% url 'forum:post' %}" style="width: 300px;">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit">Post</button>
+</form>
