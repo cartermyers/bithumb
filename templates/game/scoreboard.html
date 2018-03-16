@@ -30,70 +30,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
                 </li>
-                <!-- if request.user.is_authenticated -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
                 </li>
-                <!-- endif -->
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">About Us</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <div class="btn-group">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Signup
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right p-3">
-                            <div class="my-3">
-                                <h3>Sign Up</h3>
-                            </div>
-                            <form action="" style="width: 300px;">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="verify password">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-dark float-right">Sign Up</button>
-                                </div>
-                            </form>
-                        </div>
-                      </div>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
                 </li>
                 <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Login
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right p-3">
-                                  <div class="my-3">
-                                      <h3>Login</h3>
-                                  </div>
-                                  <form action="" style="width: 300px;">
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" name="username" id="username" placeholder="username">
-                                      </div>
-                                      <div class="form-group">
-                                          <input type="password" class="form-control" name="password" id="password" placeholder="password">
-                                      </div>
-                                      <div class="form-group">
-                                          <button class="btn btn-dark float-right">Login</button>
-                                      </div>
-                                  </form>
-                              </div>
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
                 </li>
-            </ul>
+            {% endif %}
+        </ul>
         </div>
     </nav>
     <div class="container mt-5">
@@ -115,7 +73,7 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Kentang</td>
+                    <td>TODO with a new view</td>
                     <td>10000</td>
                     <td><img src="" alt=""></td>
                 </tr>
