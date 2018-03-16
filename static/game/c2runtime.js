@@ -6460,7 +6460,6 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 
 	Runtime.prototype.waitForImageLoad = function (img_, src_)
 	{
-		src_ = 'static/game/' + src_
 		// In cross-origin local preview mode, or remote preview mode, substitute the src for a blob URL in the image files map.
 		if (window.cr_remotePreviewImageFiles && src_ && src_.substr(0, 5) !== "blob:")		// note ignore if already a blob URL (may have come from getLocalFileUrl())
 		{
@@ -6511,7 +6510,8 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			}
 		}
 
-		//this.wait_for_textures.push(img_);
+		console.log(img_);
+		this.wait_for_textures.push(img_);
 	};
 
 	Runtime.prototype.findWaitingTexture = function (src_)
@@ -11029,7 +11029,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			if (!this.isAbsoluteUrl(src))
 				src = src.toLowerCase();
 
-			img.src = src;
+			img.src = '../static/game/' + src
 		}
 	};
 
