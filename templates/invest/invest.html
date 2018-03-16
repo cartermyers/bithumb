@@ -24,80 +24,40 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index' %}">Home</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'game:scoreboard' %}">Scoreboard</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
-        </li>
-        <!-- if request.user.is_authenticated -->
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
-        </li>
-        <!-- endif -->
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'about' %}">About Us</a>
-    </li>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-        <div class="btn-group">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Signup
-        </a>
-        <div class="dropdown-menu dropdown-menu-right p-3">
-        <div class="my-3">
-        <h3>Sign Up</h3>
-    </div>
-    <form action="" style="width: 300px;">
-        <div class="form-group">
-        <input type="text" class="form-control" name="username" id="username" placeholder="username">
-        </div>
-        <div class="form-group">
-        <input type="password" class="form-control" name="password" id="password" placeholder="password">
-        </div>
-        <div class="form-group">
-        <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="verify password">
-        </div>
-        <div class="form-group">
-        <button class="btn btn-dark float-right">Sign Up</button>
-    </div>
-    </form>
-    </div>
-    </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Login
-        </a>
-        <div class="dropdown-menu dropdown-menu-right p-3">
-        <div class="my-3">
-        <h3>Login</h3>
-        </div>
-        <form action="" style="width: 300px;">
-        <div class="form-group">
-        <input type="text" class="form-control" name="username" id="username" placeholder="username">
-        </div>
-        <div class="form-group">
-        <input type="password" class="form-control" name="password" id="password" placeholder="password">
-        </div>
-        <div class="form-group">
-        <button class="btn btn-dark float-right">Login</button>
-        </div>
-        </form>
-        </div>
-        </li>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'game:scoreboard' %}">Scoreboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
+                </li>
+            {% endif %}
         </ul>
+
+
         </div>
         </nav>
         <div class="container mt-5">
@@ -121,17 +81,18 @@
         <div class="row mt-4">
         <div class="col-lg-6">
         <div class="input-group">
-        <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="3000">
+            TODO: display bitcoin exchange rate somewhere here. Maybe we have a js function that shows how much the user will convert? is this too complicated? too time consuming?
+        <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="{{ account.in_game_currency }}">
         <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">CAD</span>
+        <span class="input-group-text" id="inputGroupPrepend">USD</span>
         </div>
         </div>
         </div>
         <div class="col-lg-6">
         <div class="input-group">
-        <input type="text" name="price" id="price" class="form-control" placeholder="User's Balance" disabled value="3000">
+        <input type="text" name="price" id="price" class="form-control" placeholder="User's Balance" disabled value="{{ account.bitcoins }}">
         <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">Scores</span>
+        <span class="input-group-text" id="inputGroupPrepend">Bitcoin</span>
         </div>
         </div>
         </div>

@@ -24,9 +24,9 @@ SECRET_KEY = '@#v9+b*bh*cf&myh-*krb&#kk&d=6qhtr^og)evh=54)as7jl='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.bithumb.ca']
+ALLOWED_HOSTS = []
 
 
 # Application definition
