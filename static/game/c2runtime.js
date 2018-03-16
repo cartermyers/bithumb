@@ -5223,7 +5223,6 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		{
 			this.fetchLocalFileViaCordovaAsText("/static/game/data.js", function (str)
 			{
-				console.log("data.js stuff" + JSON.parse(str));
 				self.loadProject(JSON.parse(str));
 
 			}, function (err)
@@ -5929,7 +5928,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	// Load the runtime scripts and data
 	Runtime.prototype.loadProject = function (data_response)
 	{
-;
+		//debugger;
 		if (!data_response || !data_response["project"])
 			cr.logerror("Project model unavailable");
 
@@ -6397,6 +6396,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		// Done with trigger postinit
 		cr.clearArray(this.triggers_to_postinit)
 
+		debugger;
 		// Get list of audio files and arrange in to a map
 		this.audio_files_info = pm[7];
 		this.audio_files_map = {};		// TODO: use Map
@@ -6432,7 +6432,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 
 		this.downscalingQuality = pm[24];	// 0 = low (mips off), 1 = medium (mips on, dense spritesheet), 2 = high (mips on, sparse spritesheet)
 
-		this.preloadSounds = pm[25];		// 0 = no, 1 = yes
+		this.preloadSounds = 1; //pm[25];		// 0 = no, 1 = yes
 		this.enableFrontToBack = pm[26] && !this.isIE;		// front-to-back renderer disabled in IE (but not Edge)
 
 		this.enhancedAccelerationPrecision = pm[30];
@@ -6510,7 +6510,6 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 			}
 		}
 
-		console.log(img_);
 		this.wait_for_textures.push(img_);
 	};
 
@@ -29105,7 +29104,8 @@ cr.plugins_.Audio = function(runtime)
 		for (i = 0, len = preload_list.length; i < len; ++i)
 		{
 			p = preload_list[i];
-			src = this.runtime.getProjectFileUrl(p.filename);
+			debugger;
+			src = "../staic/game/" + this.runtime.getProjectFileUrl(p.filename);
 			p.obj = this.getAudioBuffer({
 				url: src,
 				type: p.type
@@ -29182,6 +29182,7 @@ cr.plugins_.Audio = function(runtime)
 				this.releaseAllMusicBuffers();
 
 			ret = new C2AudioBuffer(src, info.type, is_music);
+			console.log(ret);
 			audioBuffers.push(ret);
 		}
 
