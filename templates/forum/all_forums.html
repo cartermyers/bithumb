@@ -31,17 +31,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
             </li>
-            <!-- if request.user.is_authenticated -->
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
             </li>
+            {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
             </li>
-            <!-- endif -->
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About Us</a>
             </li>
