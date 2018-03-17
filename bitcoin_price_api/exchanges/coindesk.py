@@ -2,8 +2,13 @@ from decimal import Decimal
 
 from helpers import get_datetime, get_response
 
+from observer.models import Subject
 
-class CoinDesk(object):
+class CoinDesk(Subject):
+
+    #here is the get state for observer pattern
+    def get_state(self):
+        return self.get_current_price()
 
     @classmethod
     def get_current_price(cls, currency='USD'):
