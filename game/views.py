@@ -2,7 +2,10 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+
+from json import dumps
 
 def game(request):
     return render(request, 'game/game/index.html')
@@ -12,7 +15,7 @@ def scoreboard(request):
 
 @login_required
 def temp_send_page(request):
-    return render(request, 'invest/send_temp.html', {'money': request.user.bank_account.get_in_game_currency()})
+    return render(request, 'game/send_temp.html', {'money': request.user.bank_account.get_in_game_currency()})
 
 @login_required
 def send_score(request):

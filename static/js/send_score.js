@@ -66,7 +66,7 @@ function send_score() {
     console.log("create post is working!") // sanity check
     console.log($('#post-score').val())
     $.ajax({
-        url : "http://localhost:8000/invest/send_score/", // the endpoint
+        url : "http://localhost:8000/game/send_score/", // the endpoint
         type : "POST", // http method
         data : { score : $('#score').val() }, // data sent with the post request
 
@@ -75,6 +75,7 @@ function send_score() {
             $('#score').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
+            $('#money').html(json.new_amount);
         },
 
         // handle a non-successful response

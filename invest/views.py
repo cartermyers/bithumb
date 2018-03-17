@@ -5,8 +5,6 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from json import dumps
-
 from . import models
 
 def invest(request):
