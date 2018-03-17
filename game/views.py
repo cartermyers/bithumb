@@ -7,8 +7,15 @@ from django.contrib.auth.decorators import login_required
 
 from json import dumps
 
+#@login_required
+#this is the actual game used for the iframe
 def game(request):
-    return render(request, 'game/game/index.html')
+    return render(request, 'game/game.html')
+
+#@login_required
+#this is the actual page where players should be directed
+def play_game(request):
+    return render(request, 'game/index.html')
 
 def scoreboard(request):
     return render(request, 'game/scoreboard.html')

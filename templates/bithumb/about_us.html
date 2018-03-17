@@ -1,1 +1,99 @@
-This needs a basic description of the site, and of bitcoin in general
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bithumb</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Bithumb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'game:scoreboard' %}">Scoreboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="body col-lg-12 mt-4 py-4">
+            <h1>About Us</h1>
+            <h3>TODO????</h3>
+            <p>Cryptocurrency is a digital asset that is starting to gain popularity in the public.
+            However, there are many that do not understand the complexities of these non-traditional currencies.
+            Concepts such as decentralization, generation, and (the most appealing) investing can be confusing and too technical
+            for most lay people to understand.</p>
+
+            <p>To show how bitcoin and other cryptocurrencies actually work (on a rudimentary level), we are proposing a simple
+                game as an introduction to cryptocurrencies. To establish the virtual environment, we are going to make two
+                parts in our project: the mining game and simple investment procedure. There are various way to obtain
+                cryptocurrency, one way that many people are interested in is mining. Therefore, we are going to simplify the
+                mining process as an arcade game, where users “mine” to earn in-game currency by playing. In cryptocurrency
+                mining, as time goes, the difficulty escalates, as we will attempt to mimic with the arcade game difficulty.</p>
+
+            <p>After earning in-game currency, users are able to purchase in-game add-ons, such as new backgrounds or new
+                characters. Additionally, users can “invest” in some cryptocurrency with a relative exchange rate. This way,
+                users can simulate investing in cryptocurrency -- while earning (or losing) in-game currency -- with no
+                real-life risk.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
+    <div class="container">
+        <div class="row">
+            <h3>University of Regina</h3>
+        </div>
+        <div class="row">
+            <h5>Computer Science Dept.</h5>
+        </div>
+        <div class="row">
+            <h7> CS476 Group Proj. by C. Myers & J. Shin</h7>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
