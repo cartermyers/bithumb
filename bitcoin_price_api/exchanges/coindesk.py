@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from exchanges.helpers import get_datetime, get_response
+from helpers import get_datetime, get_response
 
 
 class CoinDesk(object):

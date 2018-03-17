@@ -2,8 +2,8 @@ from decimal import Decimal
 
 import dateutil.parser
 
-from exchanges.base import FuturesExchange, date_stamp, time_stamp
-from exchanges.helpers import get_response, get_datetime
+from base import FuturesExchange, date_stamp, time_stamp
+from helpers import get_response, get_datetime
 
 
 class Bitmex(FuturesExchange):

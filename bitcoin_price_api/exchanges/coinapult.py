@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from exchanges.helpers import get_response
+from helpers import get_response
 
 
 class Coinapult(object):

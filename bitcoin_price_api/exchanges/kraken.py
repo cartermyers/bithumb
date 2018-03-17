@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from exchanges.base import Exchange
-from exchanges.helpers import get_response
+from base import Exchange
+from helpers import get_response
 
 
 class Kraken(Exchange):
