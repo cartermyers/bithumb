@@ -1,9 +1,14 @@
 from decimal import Decimal
 
-from exchanges.helpers import get_datetime, get_response
+from helpers import get_datetime, get_response
 
+from observer.models import Subject
 
-class CoinDesk(object):
+class CoinDesk(Subject):
+
+    #here is the get state for observer pattern
+    def get_state(self):
+        return {'price': str(self.get_current_price())}
 
     @classmethod
     def get_current_price(cls, currency='USD'):
@@ -11,8 +16,8 @@ class CoinDesk(object):
             currency
         )
         data = get_response(url)
-        price = data['bpi'][currency]['rate_float']
-        return Decimal(price)
+        price = Decimal(data['bpi'][currency]['rate_float'])
+        return price.quantize(Decimal('.0001')) #onyl go up to 4 decimal points
 
     @classmethod
     def get_past_price(cls, date):

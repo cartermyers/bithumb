@@ -1,4 +1,4 @@
-from exchanges.base import Exchange
+from base import Exchange
 
 
 class Huobi(Exchange):

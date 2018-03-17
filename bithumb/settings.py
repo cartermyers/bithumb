@@ -15,6 +15,10 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+PUSHER_CLUSTER = "us2"
+PUSHER_KEY = "49f4ea849a621df2147f"
+PUSHER_APP_ID = "493721"
+PUSHER_SECRET = "05a5fc810d7743b89f08"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -39,7 +43,9 @@ INSTALLED_APPS = [
     'forum.apps.ForumConfig',
 
     #third-party apps
+    'bitcoin_price_api.apps.BitcoinPriceApiConfig',  #manual app, but the code is taken from github and modified
     'easy_thumbnails',
+    'observer.apps.ObserverConfig', #code modified from https://github.com/pusher/django-pusherable
 
     #default apps:
     'django.contrib.admin',
@@ -76,6 +82,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        #'libraries' : {
+        #        'invest_observer': 'invest.templatetags.invest_observer',
+        #    }
         },
     },
 ]
