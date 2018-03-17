@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'forum.apps.ForumConfig',
 
     #third-party apps
+    'bitcoin_price_api.apps.BitcoinPriceApiConfig',  #manual app, but the code is taken from github and modified
     'easy_thumbnails',
 
     #default apps:
