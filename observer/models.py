@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
-from django import template
+from django.views import View
 
 from pusher import Pusher
 
@@ -11,16 +11,24 @@ from pusher import Pusher
 #this is slightly modified because we use the Pusher app
 #some code is taken from https://github.com/pusher/django-pusherable in the mixins.py and templatetags.py
 
-register = template.Library()
+class Observer(View):
 
-class Observer(object):
+    def __init__(self):
+        _subject = None  #each class will keep track of its subject
 
-    @register.simple_tag
+    def get_subject(self):
+        return self._subject
+
+    def set_subject(self, subject):
+        self._subject = subject
+
+    @staticmethod
     def pusherable_script():
         return "<script src=\"//js.pusher.com/2.2/pusher.min.js\" type=\"text/javascript\"></script>"
 
-    @register.simple_tag
-    def update(event, subject):
+    @staticmethod
+    def update(subject):
+        event = 'update'
         channel = type(subject).__name__
 
         try:
@@ -30,7 +38,7 @@ class Observer(object):
 
         return """
         <script type=\"text/javascript\">
-        var pusher = new Pusher('{key}', {cluster: '{cluster}'});
+        var pusher = new Pusher('{key}', {{cluster: '{cluster}'}});
         var channel = pusher.subscribe('{channel}');
         channel.bind('{event}', function(data) {{
           pusherable_notify('{event}', data);
@@ -38,10 +46,9 @@ class Observer(object):
         </script>
         """.format(
             key=settings.PUSHER_KEY,
-            cluster=settiings.PUSHER_CLUSTER,
+            cluster=settings.PUSHER_CLUSTER,
             channel=channel,
-            event=event
-        )
+            event=event)
 
 class Subject(object):
     #this is the channel on pusher that we will broadcast on
@@ -50,14 +57,16 @@ class Subject(object):
 
         channel = type(self).__name__
         try:
-            channel += "_" + subject.pk
+            channel += "_" + self.pk
         except AttributeError:
             pass
 
         return channel
 
+    #interface that is implemented by child
+    #must return a dict
     def get_state(self):
-        pass
+        return {}
 
     #this is the notify function with a push method
     def notify(self):

@@ -10,6 +10,22 @@
     {% load static %}
     {% load thumbnail %}
 
+    <script>
+    pusherable_notify = function(event, data)
+    {
+        document.getElementById("price").innerHTML = data.object.price;
+    }
+    </script>
+
+    <!-- load observer functions -->
+    {% load invest_observer %}
+
+    {% autoescape off %}
+    {% pusherable_script %}
+    {{ subject|invest_update }}
+    {% endautoescape %}
+
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
@@ -82,7 +98,7 @@
         <div class="col-lg-6">
         <div class="input-group">
             TODO: display bitcoin exchange rate somewhere here. Maybe we have a js function that shows how much the user will convert? is this too complicated? too time consuming?<br />
-            Anyway, here is the current rate (1 bitcoin is {{ exchange_rate }} USD)<br />
+            Anyway, here is the current rate (1 bitcoin is <div id="price">{{ exchange_rate }}</div>  USD)<br />
             And the user's account info is listed in the right spots<br />
         <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="{{ account.in_game_currency }}">
         <div class="input-group-append">

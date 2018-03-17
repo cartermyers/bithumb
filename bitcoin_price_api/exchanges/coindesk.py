@@ -8,7 +8,7 @@ class CoinDesk(Subject):
 
     #here is the get state for observer pattern
     def get_state(self):
-        return self.get_current_price()
+        return {'price': str(self.get_current_price())}
 
     @classmethod
     def get_current_price(cls, currency='USD'):
