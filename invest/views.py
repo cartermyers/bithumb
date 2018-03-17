@@ -18,7 +18,8 @@ def invest(request):
     else:
         #get the user's bank account info
         account = request.user.get_bank_account()
-        #and get the current bitcoin exchange rate (based on USD):
+        #only show
+        #and get the current bitcoin exchange rate (based on USD)
         exchange_rate = CoinDesk().get_current_price()
 
     return render(request, 'invest/invest.html', {"account": account, "exchange_rate": exchange_rate})

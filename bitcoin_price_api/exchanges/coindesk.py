@@ -11,8 +11,8 @@ class CoinDesk(object):
             currency
         )
         data = get_response(url)
-        price = data['bpi'][currency]['rate_float']
-        return Decimal(price)
+        price = Decimal(data['bpi'][currency]['rate_float'])
+        return price.quantize(Decimal('.0001')) #onyl go up to 4 decimal points
 
     @classmethod
     def get_past_price(cls, date):
