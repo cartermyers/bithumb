@@ -65,19 +65,19 @@
             <thead>
                 <tr>
                     <td>No</td>
-                    <td>Cost(Pts)</td>
-                    <td>Title</td>
-                    <td>Img</td>
+                    <td>User</td>
+                    <td>High Score</td>
                 </tr>
             </thead>
+            {% for user in top_users %}
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>TODO with a new view</td>
-                    <td>10000</td>
-                    <td><img src="" alt=""></td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.highscore }}</td>
                 </tr>
             </tbody>
+            {% endfor %}
         </table>
         </div>
 </div>
