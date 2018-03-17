@@ -59,6 +59,7 @@ $(function() {
 
 
 
+/*
 // here is an ajax function to send scores
 
 // AJAX for posting
@@ -94,3 +95,4 @@ $('#post-score').on('submit', function(event){
     console.log("form submitted!")  // sanity check
     send_score();
 });
+*/
