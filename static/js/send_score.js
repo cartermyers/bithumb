@@ -68,11 +68,11 @@ function send_score() {
     $.ajax({
         url : "http://localhost:8000/invest/send_score/", // the endpoint
         type : "POST", // http method
-        data : { score : $('#post-score').val() }, // data sent with the post request
+        data : { score : $('#score').val() }, // data sent with the post request
 
         // handle a successful response
         success : function(json) {
-            $('#post-score').val(''); // remove the value from the input
+            $('#score').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
         },
