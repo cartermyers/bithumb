@@ -28,9 +28,9 @@ SECRET_KEY = '@#v9+b*bh*cf&myh-*krb&#kk&d=6qhtr^og)evh=54)as7jl='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False 
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.bithumb.ca']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -96,13 +96,19 @@ WSGI_APPLICATION = 'bithumb.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'shin202j$default',
-        'USER': 'shin202j',
-        'PASSWORD': 'bound2Wavy',
-        'HOST': 'shin202j.mysql.pythonanywhere-services.com',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': 'shin202j$default',
+    #    'USER': 'shin202j',
+    #    'PASSWORD': 'bound2Wavy',
+    #    'HOST': 'shin202j.mysql.pythonanywhere-services.com',
+    #}
 }
 
 
