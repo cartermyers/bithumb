@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
 from bitcoin_price_api.exchanges import CoinDesk
@@ -34,36 +34,38 @@ def itemshop(request):
     return render(request, 'invest/itemshop.html')
 
 @login_required
-def exchange_bitcoin_for_in_game_currency(request, rate):
+def exchange_bitcoin_for_in_game_currency(request):
     if request.method == "POST":
         bitcoin_form = forms.BitcoinToInGameCurrencyForm(request.POST)
 
         if bitcoin_form.is_valid():
             account = request.user.get_bank_account()
             bitcoin = bitcoin_form.cleaned_data['bitcoin']
-            rate = request.GET.get('rate')
+            rate = CoinDesk().get_state['price']
             try:
                 account.exchange_bitcoin_for_in_game_currency(bitcoin, rate)
                 return HttpResponseRedirect('invest:invest')
             except AssertionError:
+                request.session['error'] = "Sorry, you don't have enough in your account to make that exchange."
                 messages.error(request, "Sorry, you don't have enough in your account to make that exchange.")
 
     #if there are any errors:
     return Invest.as_view(request)
 
 @login_required
-def exchange_in_game_currency_for_bitcoin(request, rate):
+def exchange_in_game_currency_for_bitcoin(request):
     if request.method == "POST":
         in_game_currency_form = forms.InGameCurrencyToBitcoinForm(request.POST)
 
         if in_game_currency_form.is_valid():
             account = request.user.get_bank_account()
             in_game_currency = in_game_currency_form.cleaned_data['in_game_currency']
-            rate = float(rate)
+            rate = CoinDesk().get_state['price']
             try:
                 account.exchange_in_game_currency_for_bitcoin(in_game_currency, rate)
                 return HttpResponseRedirect('invest:invest')
             except AssertionError:
+                request.session['error'] = "Sorry, you don't have enough in your account to make that exchange."
                 messages.error(request, "Sorry, you don't have enough in your account to make that exchange.")
 
     #if there are any errors:

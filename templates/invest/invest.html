@@ -122,6 +122,11 @@
 
                 <div class="col-lg-6">
                     <h3>Buy Bitcoin</h3>
+                    messages:
+                    {{ request.session.error }}
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
                     <div class="input-group my-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -154,7 +159,7 @@
                                 <input type="radio" name="pay" onchange="changePay(this)" data-type="bitcoins" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <form method="POST" action="{% url 'invest:exchange_bitcoin' rate=1.00 %}">
+                        <form method="POST" action="{% url 'invest:exchange_bitcoin' %}">
                             {% csrf_token %}
                             {{ bitcoin_form.non_field_errors }}
                             {% for field in bitcoin_form %}
