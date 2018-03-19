@@ -4,8 +4,8 @@ from decimal import Decimal
 import dateutil.parser
 import requests
 
-from exchanges.base import Exchange, FuturesExchange, date_stamp, time_stamp
-from exchanges.helpers import get_response, get_datetime
+from base import Exchange, FuturesExchange, date_stamp, time_stamp
+from helpers import get_response, get_datetime
 
 
 class OKCoin(Exchange):
