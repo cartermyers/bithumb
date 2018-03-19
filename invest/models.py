@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from decimal import Decimal
+
 class BankAccount(models.Model):
     #see https://en.bitcoin.it/wiki/Units
     #min value is 1 satoshi (8 decimal places)
@@ -12,6 +14,9 @@ class BankAccount(models.Model):
     #actual in game currency (analagous to CAD, hence 2 decimal places)
     #and we'll say max 999,999,999,999,999 (so 17 total digits)
     in_game_currency = models.DecimalField(max_digits=17, decimal_places=2, default=0)
+
+    def deposit_in_game_currency(self, new_amount):
+        self.in_game_currency += Decimal(str(new_amount))
 
     def get_bitcoins(self):
         return float(self.bitcoins)
