@@ -111,15 +111,22 @@
                                 <input type="radio" name="pay" onchange="changePay(this)" data-type="scores" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                    <input type="text" name="price" id="scores" class="form-control" onkeyup = "ptsTOcoin(this)",  disabled placeholder="Amount scores to spend">
+                    <form method="POST" action="{% url 'invest:exchange_in_game' rate=1.00 %}">
+                        {% csrf_token %}
+                        {{ in_game_currency_form.non_field_errors }}
+                        {% for field in in_game_currency_form %}
+                        {{ field.errors }}
+                        {{ field }}
                         <div class="input-group-append">
-                            <span class="input-group-text" id="inputGroupPrepend">PTS</span>
+                            <span class="input-group-text" id="inputGroupPrepend">USD</span>
                         </div>
+                        {% endfor %}
                     </div>
                     <h5 id="convertPTS">Converted amount: </h5>
                     <div class="col-lg-6">
                         <button class="btn btn-dark">BUY</button>
                     </div>
+                </form>
                 </div>
 
                 <div class="col-lg-6">
@@ -127,10 +134,10 @@
                     <div class="input-group my-3">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="radio" name="pay" onchange="changePay(this)" data-type="cad" aria-label="Radio button for following text input">
+                                <input type="radio" name="pay" onchange="changePay(this)" data-type="bitcoins" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" name="price" id="cad" class="form-control" onkeyup = "coinTOpts(this)" disabled placeholder="Amount of Bitcoins to spend">
+                        <input type="text" name="price" id="bitcoins" class="form-control" onkeyup = "coinTOpts(this)" disabled placeholder="Amount of Bitcoins to spend">
                         <div class="input-group-append">
                             <span class="input-group-text" id="inputGroupPrepend">Bitcoins</span>
                         </div>
@@ -163,24 +170,39 @@
     function changePay(e) {
         var type = $(e).data('type');
 
-        if(type == 'scores') {
-            $('#scores').attr('disabled', false);
-            $('#cad').attr('disabled', true);
-        }else if(type == 'cad') {
-            $('#cad').attr('disabled', false);
+        if(type == 'bitcoins') {
+            $('#bitcoins').attr('disabled', false);
             $('#scores').attr('disabled', true);
+        }else if(type == 'scores') {
+            $('#scores').attr('disabled', false);
+            $('#bitcoins').attr('disabled', true);
         }
     }
 
     function ptsTOcoin(e){
-        var PTSrate =0.00001;
-        convertPTS.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("scores").value) * PTSrate) + "Bitcoins";
+        var PTSrate = 0.00001;
+        var pts = parseFloat(document.getElementById("scores").value);
+        var amount = 0;
 
+        if (pts > 0)
+        {
+            amount = pts * PTSrate;
+        }
+
+        convertPTS.innerText = "Converted Amount: " + Number((amount).toFixed(8)) + " Bitcoins";
     }
 
     function coinTOpts(e){
-        var COINrate =10000;
-        convertCoin.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("cad").value) * COINrate) + "USD";
+        var COINrate = 10000;
+        var coins =  parseFloat(document.getElementById("bitcoins").value);
+        var amount = 0;
+
+        if (pts > 0)
+        {
+            amount = coins * COINrate;
+        }
+
+        convertPTS.innerText = "Converted Amount: " + Number((amount).toFixed(2)) + " USD";
     }
     </script>
 </html>
