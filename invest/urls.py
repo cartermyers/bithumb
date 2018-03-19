@@ -6,4 +6,6 @@ from . import views
 urlpatterns = [
     url(r'^$', login_required(views.Invest.as_view()), name='invest'),
     url(r'^itemshop/$', views.itemshop, name='itemshop'),
+    url(r'^exchange_bitcoin/$', views.exchange_bitcoin_for_in_game_currency, name='exchange_bitcoin'),
+    url(r'^exchange_in_game/$', views.exchange_in_game_currency_for_bitcoin, name='exchange_in_game'),
 ]

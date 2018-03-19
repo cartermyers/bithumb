@@ -13,6 +13,24 @@ class BankAccount(models.Model):
     #and we'll say max 999,999,999,999,999 (so 17 total digits)
     in_game_currency = models.DecimalField(max_digits=17, decimal_places=2, default=0)
 
+    #NOTE: since the rate will be pushed real time to the user,
+    #we we can assume the rate can be passed
+    def exchange_bitcoin_for_in_game_currency(self, bitcoin, rate):
+        if bitcoin > self.bitcoins:
+            raise AssertionError
+
+        self.bitcoins -= Decimal(str(bitcoin))
+        self.in_game_currency += Decimal(str(bitcoin * rate))
+        self.save()
+
+    def exchange_in_game_currency_for_bitcoin(self, in_game_currency, rate):
+        if in_game_currency > self.in_game_currency:
+            raise AssertionError
+
+        self.in_game_currency -= Decimal(str(in_game_currency))
+        self.bitcoins += Decimal(str(in_game_currency / rate))
+        self.save()
+
     def get_bitcoins(self):
         return float(self.bitcoins)
 
