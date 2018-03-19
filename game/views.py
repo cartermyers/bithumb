@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 
 from json import dumps
 
+from account.models import User
+
 #@login_required
 #this is the actual game used for the iframe
 def game(request):
@@ -18,7 +20,9 @@ def play_game(request):
     return render(request, 'game/index.html')
 
 def scoreboard(request):
-    return render(request, 'game/scoreboard.html')
+    #get top 10 users by high score
+    top_users = User.objects.order_by('highscore')[:10]
+    return render(request, 'game/scoreboard.html', {'top_users': top_users})
 
 @login_required
 def temp_send_page(request):

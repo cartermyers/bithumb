@@ -1,4 +1,4 @@
-from exchanges.base import Exchange
+from base import Exchange
 
 class BraveNewCoin(Exchange):
     TICKER_URL = 'http://api.bravenewcoin.com/ticker/bnc_ticker_btc.json'
