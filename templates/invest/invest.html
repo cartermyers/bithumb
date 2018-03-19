@@ -61,90 +61,102 @@
         </div>
         </nav>
         <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
+                    <img src="{% static 'img/logo.png' %}" style="width: auto; height: 100px">
+                </div>
+            </div>
         <div class="row">
-        <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
-        <img src="{% static 'img/logo.png' %}" style="width: 100%">
-        </div>
-        </div>
-        <div class="row">
-        <div class="col-lg-12">
-        <div class="card mt-3" style="width: 100%; height: auto;">
-        <div class="card-body p-3">
-        {#  % thumbnail category.image 370x280 crop as thumb %  #}
-    <!--img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="hey"/-->
-        <img src="{% static 'img/weekly_prices.png' %}" style="width: 100%">
-        </div>
-        </div>
-        </div>
+            <div class="col-lg-12">
+                <div class="card mt-3" style="width: 100%; height: auto;">
+                    <div class="card-body p-3">
+                        {#  % thumbnail category.image 370x280 crop as thumb %  #}
+                        <!--img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="hey"/-->
+                        <img src="{% static 'img/weekly_prices.png' %}" style="width: 100%">
+                    </div>
+                </div>
+            </div>
         </div>
         <form action="">
-        <div class="row mt-4">
-        <div class="col-lg-6">
-        <div class="input-group">
-            TODO: display bitcoin exchange rate somewhere here. Maybe we have a js function that shows how much the user will convert? is this too complicated? too time consuming?
-        <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="{{ account.in_game_currency }}">
-        <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">USD</span>
-        </div>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="input-group">
-        <input type="text" name="price" id="price" class="form-control" placeholder="User's Balance" disabled value="{{ account.bitcoins }}">
-        <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">Bitcoin</span>
-        </div>
-        </div>
-        </div>
-        </div>
-        <div class="row">
-        <div class="col-lg-6">
-        <div class="input-group my-3">
-        <div class="input-group-prepend">
-        <div class="input-group-text">
-        <input type="radio" name="pay" onchange="changePay(this)" data-type="scores" aria-label="Radio button for following text input">
-        </div>
-        </div>
-        <input type="text" name="price" id="scores" class="form-control" disabled placeholder="Amount scores to spend">
-        <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">PTS</span>
-        </div>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="input-group my-3">
-        <div class="input-group-prepend">
-        <div class="input-group-text">
-        <input type="radio" name="pay" onchange="changePay(this)" data-type="cad" aria-label="Radio button for following text input">
-        </div>
-        </div>
-        <input type="text" name="price" id="cad" class="form-control" disabled placeholder="Amount of CAD to spend">
-        <div class="input-group-append">
-        <span class="input-group-text" id="inputGroupPrepend">CAD</span>
-        </div>
-        </div>
-        </div>
-        </div>
-        <div class="row">
-        <div class="col-lg-12 text-right">
-        <button class="btn btn-light">Proceed</button>
-        </div>
-        </div>
+            <div class="row mt-4">
+                <h3>User's Account</h3>
+            </div>
+            <div class="row mt-4" style="width:300px">
+                <div class="input-group">
+                    <!--TODO: display bitcoin exchange rate somewhere here. Maybe we have a js function that shows how much the user will convert? is this too complicated? too time consuming? -->
+                    <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="{{ account.in_game_currency }}">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="inputGroupPrepend">USD</span>
+                    </div>
+                </div>
+            </div>
+                <!-- <div class="col-lg-6"> -->
+            <div class="row mt-4" style="width: 300px">
+                <div class="input-group">
+                    <input type="text" name="price" id="price" class="form-control" placeholder="User's Balance" disabled value="{{ account.bitcoins }}">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="inputGroupPrepend">Bitcoin</span>
+                    </div>
+                </div>
+            </div>
+&nbsp
+&nbsp
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <h3>Buy Bitcoin</h3>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="radio" name="pay" onchange="changePay(this)" data-type="scores" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                    <input type="text" name="price" id="scores" class="form-control" onkeyup = "ptsTOcoin(this)",  disabled placeholder="Amount scores to spend">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="inputGroupPrepend">PTS</span>
+                        </div>
+                    </div>
+                    <h5 id="convertPTS">Converted amount: </h5>
+                    <div class="col-lg-6">
+                        <button class="btn btn-dark">BUY</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <h3>Sell Bitcoin</h3>
+                    <div class="input-group my-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="radio" name="pay" onchange="changePay(this)" data-type="cad" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <input type="text" name="price" id="cad" class="form-control" onkeyup = "coinTOpts(this)" disabled placeholder="Amount of Bitcoins to spend">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="inputGroupPrepend">Bitcoins</span>
+                        </div>
+                    </div>
+                    <h5 id="convertCoin">Converted amount: </h5>
+                    <div class="col-lg-6">
+                        <button class="btn btn-dark">SELL</button>
+                    </div>
+                </div>
+            </div>
+
         </form>
-        </div>
-        <!-- Footer -->
-        <div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
+    </div>
+    <!-- Footer -->
+    <div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
         <div class="container">
-        <div class="row">
-        <h3>University of Regina</h3>
-    </div>
-    <div class="row">
-        <h5>Computer Science Dept.</h5>
-    </div>
-    <div class="row">
-        <h7> CS476 Group Proj. by C. Myers & J. Shin</h7>
-    </div>
-    </div>
+            <div class="row">
+                <h3>University of Regina</h3>
+            </div>
+            <div class="row">
+                <h5>Computer Science Dept.</h5>
+            </div>
+            <div class="row">
+                <h7> CS476 Group Proj. by C. Myers & J. Shin</h7>
+            </div>
+        </div>
     </div>
     </body>
     <script>
@@ -158,6 +170,17 @@
             $('#cad').attr('disabled', false);
             $('#scores').attr('disabled', true);
         }
+    }
+
+    function ptsTOcoin(e){
+        var PTSrate =0.00001;
+        convertPTS.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("scores").value) * PTSrate) + "Bitcoins";
+
+    }
+
+    function coinTOpts(e){
+        var COINrate =10000;
+        convertCoin.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("cad").value) * COINrate) + "USD";
     }
     </script>
 </html>
