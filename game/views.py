@@ -26,10 +26,6 @@ def scoreboard(request):
     return render(request, 'game/scoreboard.html', {'top_users': top_users})
 
 @login_required
-def temp_send_page(request):
-    return render(request, 'game/send_temp.html', {'money': request.user.bank_account.get_in_game_currency()})
-
-@login_required
 def send_score(request):
     if request.method == "POST":
         #get the user's bank account
