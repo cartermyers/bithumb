@@ -33,6 +33,10 @@ class BankAccount(models.Model):
         self.bitcoins += Decimal(str(in_game_currency / rate))
         self.save()
 
+    def deposit_in_game_currency(self, new_amount):
+        self.in_game_currency += Decimal(str(new_amount))
+
+
     def get_bitcoins(self):
         return float(self.bitcoins)
 
