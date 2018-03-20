@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from decimal import Decimal
+
 class BankAccount(models.Model):
     #see https://en.bitcoin.it/wiki/Units
     #min value is 1 satoshi (8 decimal places)

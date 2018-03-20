@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <form action="">
+        <!-- form action=""-->
             <div class="row">
             <div class="col-lg-6">
                 <h3>User's Account</h3>
@@ -122,12 +122,8 @@
 
                 <div class="col-lg-6">
                     <h3>Buy Bitcoin</h3>
-                    messages:
-                    {{ request.session.error }}
-                    {% for message in messages %}
-                    {{ message }}
-                    {% endfor %}
                     <div class="input-group my-3">
+                        {{ in_game_currency_form.non_field_errors }}
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="radio" name="pay" onchange="changePay(this)" data-type="scores" aria-label="Radio button for following text input">
@@ -135,7 +131,6 @@
                         </div>
                     <form method="POST" action="{% url 'invest:exchange_in_game' %}">
                         {% csrf_token %}
-                        {{ in_game_currency_form.non_field_errors }}
                         {% for field in in_game_currency_form %}
                         {{ field.errors }}
                         {{ field }}
@@ -154,6 +149,7 @@
                 <div class="col-lg-6">
                     <h3>Sell Bitcoin</h3>
                     <div class="input-group my-3">
+                        {{ bitcoin_form.non_field_errors }}
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="radio" name="pay" onchange="changePay(this)" data-type="bitcoins" aria-label="Radio button for following text input">
@@ -161,7 +157,6 @@
                         </div>
                         <form method="POST" action="{% url 'invest:exchange_bitcoin' %}">
                             {% csrf_token %}
-                            {{ bitcoin_form.non_field_errors }}
                             {% for field in bitcoin_form %}
                             {{ field.errors }}
                             {{ field }}
@@ -178,7 +173,7 @@
                 </div>
             </div>
 
-        </form>
+        <!--/form-->
     </div>
     <!-- Footer -->
     <div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
