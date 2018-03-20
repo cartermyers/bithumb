@@ -6929,6 +6929,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	// Run once textures have all completed
 	Runtime.prototype.go_loading_finished = function ()
 	{
+		debugger;
 		// If there are any web fonts used in the project, and the browser supports loading them with document.fonts.load,
 		// wait for them all to finish loading before starting. Otherwise just start right away.
 		if (this.webFontNames.length && document.fonts && document.fonts.load)
@@ -7373,6 +7374,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 		// Tick behaviors
 		for (i = 0, leni = this.types_by_index.length; i < leni; i++)
 		{
+
 			type = this.types_by_index[i];
 
 			// don't bother iterating types without behaviors. Types in a family
@@ -32463,6 +32465,18 @@ cr.plugins_.AJAX = function(runtime)
 
 	instanceProto.doRequest = function (tag_, url_, method_, data_)
 	{
+		//NOTE: This first bit of code is specific to our site,
+		// and it is probably not useful, but it should work in this niche case
+		if (method_ === "POST")
+		{
+			//decode the score from the url (which is always followed by =)
+			var user_score = url_.split('=')[1];
+
+			//then send score using AJAX:
+			send_score(user_score);
+			return;
+		}
+
 		// Create a context object with the tag name and a reference back to this
 		var self = this;
 		var request = null;
@@ -32724,6 +32738,7 @@ cr.plugins_.AJAX = function(runtime)
 
 	Acts.prototype.Post = function (tag_, url_, data_, method_)
 	{
+		debugger;
 		this.doRequest(tag_, url_, method_, data_);
 	};
 

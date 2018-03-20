@@ -1,3 +1,4 @@
+
 //Here are some functions for csrf tokens
 // taken from https://github.com/realpython/django-form-fun/blob/master/part1/main.js
 
@@ -57,26 +58,22 @@ $(function() {
 
 });
 
-
-
-
 // here is an ajax function to send scores
 
 // AJAX for posting
-function send_score() {
-    console.log("create post is working!") // sanity check
-    console.log($('#post-score').val())
+function send_score(user_score) {
+    console.log("send score is working!") // sanity check
     $.ajax({
         url : "http://localhost:8000/game/send_score/", // the endpoint
         type : "POST", // http method
-        data : { score : $('#score').val() }, // data sent with the post request
+        data : { score : user_score }, // data sent with the post request
 
         // handle a successful response
         success : function(json) {
-            $('#score').val(''); // remove the value from the input
+            //$('#score').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
-            $('#money').html(json.new_amount);
+            //$('#money').html(json.new_amount);
         },
 
         // handle a non-successful response
@@ -87,11 +84,3 @@ function send_score() {
         }
     });
 };
-
-//event handler:
-// Submit post on submit
-$('#post-score').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-    send_score();
-});

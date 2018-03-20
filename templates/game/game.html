@@ -6,6 +6,8 @@
 <title>Bithumb</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 	<link rel="manifest" href="{% static 'game/appmanifest.json' %}">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="128x128" href="{% static 'game/icons/icon-128.png' %}">
@@ -18,6 +20,7 @@
 </head>
 <body>
 <div id="fb-root"></div>
+	<script src="{% static 'js/send_score.js' %}"></script>
 	<script src="{% static 'game/opus.js' %}"></script>
 	<script src="{% static 'game/c2runtime.js' %}"></script>
 	<script src="{% static 'game/start.js' %}"></script>
