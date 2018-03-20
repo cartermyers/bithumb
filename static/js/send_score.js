@@ -64,7 +64,7 @@ $(function() {
 function send_score(user_score) {
     console.log("send score is working!") // sanity check
     $.ajax({
-        url : "http://localhost:8000/game/send_score/", // the endpoint
+        url : "http://www.bithumb.ca/game/send_score/", // the endpoint
         type : "POST", // http method
         data : { score : user_score }, // data sent with the post request
 
