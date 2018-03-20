@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
+from django.urls import reverse
+from decimal import Decimal
 
 from bitcoin_price_api.exchanges import CoinDesk
 from observer.models import Observer
@@ -40,10 +42,10 @@ def exchange_bitcoin_for_in_game_currency(request):
         if bitcoin_form.is_valid():
             account = request.user.get_bank_account()
             bitcoin = bitcoin_form.cleaned_data['bitcoin']
-            rate = CoinDesk().get_state()['price']
+            rate = Decimal(CoinDesk().get_state()['price'])
             try:
                 account.exchange_bitcoin_for_in_game_currency(bitcoin, rate)
-                return HttpResponseRedirect('invest:invest')
+                return HttpResponseRedirect(reverse('invest:invest'))
             except AssertionError:
                 bitcoin_form.add_error(None, "Sorry, you don't have enough in your account to make that exchange.")
 
@@ -59,10 +61,10 @@ def exchange_in_game_currency_for_bitcoin(request):
         if in_game_currency_form.is_valid():
             account = request.user.get_bank_account()
             in_game_currency = in_game_currency_form.cleaned_data['in_game_currency']
-            rate = CoinDesk().get_state()['price']
+            rate = Decimal(CoinDesk().get_state()['price'])
             try:
                 account.exchange_in_game_currency_for_bitcoin(in_game_currency, rate)
-                return HttpResponseRedirect('invest:invest')
+                return HttpResponseRedirect(reverse('invest:invest'))
             except AssertionError:
                 in_game_currency_form.add_error(None, "Sorry, you don't have enough in your account to make that exchange.")
 
