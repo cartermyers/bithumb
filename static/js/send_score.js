@@ -70,10 +70,11 @@ function send_score(user_score) {
 
         // handle a successful response
         success : function(json) {
-            //$('#score').val(''); // remove the value from the input
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
-            //$('#money').html(json.new_amount);
+            //access the parent window
+            // that is, the element that is outside of the iframe this code is located in
+            window.parent.document.getElementById("total_score").innerHTML = json.new_amount;
         },
 
         // handle a non-successful response

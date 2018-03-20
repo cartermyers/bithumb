@@ -9,15 +9,16 @@ from json import dumps
 
 from account.models import User
 
-#@login_required
-#this is the actual game used for the iframe
+@login_required
 def game(request):
     return render(request, 'game/game.html')
 
-#@login_required
-#this is the actual page where players should be directed
+@login_required
 def play_game(request):
-    return render(request, 'game/index.html')
+
+    total_in_game_currency = request.user.get_bank_account().get_in_game_currency()
+
+    return render(request, 'game/index.html', {'total_score': total_in_game_currency})
 
 def scoreboard(request):
     #get top 10 users by high score
@@ -35,7 +36,12 @@ def send_score(request):
         account = request.user.get_bank_account()
 
         #update the in-game currency:
-        account.deposit_in_game_currency(request.POST.get('score', 0))
+        new_score = request.POST.get('score', 0)
+
+        if new_score < 0:
+            new_score = 0
+
+        account.deposit_in_game_currency(new_score)
         account.save()
 
         #return success with new amount for user

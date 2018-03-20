@@ -6929,7 +6929,7 @@ quat4.str=function(a){return"["+a[0]+", "+a[1]+", "+a[2]+", "+a[3]+"]"};
 	// Run once textures have all completed
 	Runtime.prototype.go_loading_finished = function ()
 	{
-		debugger;
+		//debugger;
 		// If there are any web fonts used in the project, and the browser supports loading them with document.fonts.load,
 		// wait for them all to finish loading before starting. Otherwise just start right away.
 		if (this.webFontNames.length && document.fonts && document.fonts.load)
@@ -32738,7 +32738,7 @@ cr.plugins_.AJAX = function(runtime)
 
 	Acts.prototype.Post = function (tag_, url_, data_, method_)
 	{
-		debugger;
+		//debugger;
 		this.doRequest(tag_, url_, method_, data_);
 	};
 

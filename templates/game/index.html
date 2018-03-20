@@ -9,6 +9,7 @@
 
     {% load static %}
 
+<!-- TODO: make static? -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
@@ -51,15 +52,11 @@
             </div>
         </div>
         <div class="row">
-            <h4>Score : </h4>
-        </div>
-        <div class="row">
-        <h4>Bitcoin Rate(USD):</h4>
+            <h4>Total Score (USD): <span id="total_score">{{ total_score }}</span></h4>
         </div>
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
                 <iframe src ="{% url 'game:game' %}" style="width: 320px; height:480px"></iframe>
-                {% csrf_token %}
             </div>
         </div>
     </div>
