@@ -13,6 +13,23 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
+    <script>
+    //function to accept pushed data
+    pusherable_notify = function(event, data)
+    {
+        console.log(data.object.price);
+        $("#rate").val(data.object.price);
+    }
+    </script>
+
+   <!-- load observer functions -->
+   {% load invest_observer %}
+
+   {% autoescape off %}
+   {% pusherable_script %}
+   {{ subject|invest_update }}
+   {% endautoescape %}
+
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     </head>
@@ -77,13 +94,14 @@
                 </div>
             </div>
         </div>
-        <form action="">
-            <div class="row mt-4">
+        <!-- form action=""-->
+            <div class="row">
+            <div class="col-lg-6">
                 <h3>User's Account</h3>
-            </div>
+
             <div class="row mt-4" style="width:300px">
                 <div class="input-group">
-                    <!--TODO: display bitcoin exchange rate somewhere here. Maybe we have a js function that shows how much the user will convert? is this too complicated? too time consuming? -->
+
                     <input type="text" name="price" id="price" class="form-control" placeholder="Bitcoin Price" disabled value="{{ account.in_game_currency }}">
                     <div class="input-group-append">
                         <span class="input-group-text" id="inputGroupPrepend">USD</span>
@@ -99,6 +117,22 @@
                     </div>
                 </div>
             </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3>Bitcoin Exchange rate</h3>
+
+                <div class="row mt-4" style="width:300px">
+                    <div class="input-group">
+
+                        <input type="text" name="rate" id="rate" class="form-control" placeholder="Exchange Rate" disabled value="{{ exchange_rate }}">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="inputGroupPrepend">USD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 &nbsp
 &nbsp
             <div class="row">
@@ -106,43 +140,57 @@
                 <div class="col-lg-6">
                     <h3>Buy Bitcoin</h3>
                     <div class="input-group my-3">
+                        {{ in_game_currency_form.non_field_errors }}
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <input type="radio" name="pay" onchange="changePay(this)" data-type="scores" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                    <input type="text" name="price" id="scores" class="form-control" onkeyup = "ptsTOcoin(this)",  disabled placeholder="Amount scores to spend">
+                    <form method="POST" action="{% url 'invest:exchange_in_game' %}">
+                        {% csrf_token %}
+                        {% for field in in_game_currency_form %}
+                        {{ field.errors }}
+                        {{ field }}
                         <div class="input-group-append">
-                            <span class="input-group-text" id="inputGroupPrepend">PTS</span>
+                            <span class="input-group-text" id="inputGroupPrepend">USD</span>
                         </div>
+                        {% endfor %}
                     </div>
-                    <h5 id="convertPTS">Converted amount: </h5>
+                    <h5 id="convertPTS">Estimated Converted amount: 0</h5>
                     <div class="col-lg-6">
-                        <button class="btn btn-dark">BUY</button>
+                        <button type="submit" class="btn btn-dark">BUY</button>
                     </div>
+                </form>
                 </div>
 
                 <div class="col-lg-6">
                     <h3>Sell Bitcoin</h3>
                     <div class="input-group my-3">
+                        {{ bitcoin_form.non_field_errors }}
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <input type="radio" name="pay" onchange="changePay(this)" data-type="cad" aria-label="Radio button for following text input">
+                                <input type="radio" name="pay" onchange="changePay(this)" data-type="bitcoins" aria-label="Radio button for following text input">
                             </div>
                         </div>
-                        <input type="text" name="price" id="cad" class="form-control" onkeyup = "coinTOpts(this)" disabled placeholder="Amount of Bitcoins to spend">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="inputGroupPrepend">Bitcoins</span>
-                        </div>
+                        <form method="POST" action="{% url 'invest:exchange_bitcoin' %}">
+                            {% csrf_token %}
+                            {% for field in bitcoin_form %}
+                            {{ field.errors }}
+                            {{ field }}
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="inputGroupPrepend">Bitcoins</span>
+                            </div>
+                            {% endfor %}
                     </div>
-                    <h5 id="convertCoin">Converted amount: </h5>
+                    <h5 id="convertCoin">Estimated Converted amount: 0</h5>
                     <div class="col-lg-6">
-                        <button class="btn btn-dark">SELL</button>
+                        <button type="submit" class="btn btn-dark">SELL</button>
                     </div>
+                </form>
                 </div>
             </div>
 
-        </form>
+        <!--/form-->
     </div>
     <!-- Footer -->
     <div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
@@ -162,25 +210,40 @@
     <script>
     function changePay(e) {
         var type = $(e).data('type');
-
-        if(type == 'scores') {
-            $('#scores').attr('disabled', false);
-            $('#cad').attr('disabled', true);
-        }else if(type == 'cad') {
-            $('#cad').attr('disabled', false);
+        if(type == 'bitcoins') {
+            $('#bitcoins').attr('disabled', false);
             $('#scores').attr('disabled', true);
+        }else if(type == 'scores') {
+            $('#scores').attr('disabled', false);
+            $('#bitcoins').attr('disabled', true);
         }
     }
 
     function ptsTOcoin(e){
-        var PTSrate =0.00001;
-        convertPTS.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("scores").value) * PTSrate) + "Bitcoins";
 
+        var PTSrate = parseFloat($("#rate").val());
+        var pts = parseFloat($("#scores").val());
+        var amount = 0;
+
+        if (pts > 0)
+        {
+            amount = pts / PTSrate;
+        }
+
+        $('#convertPTS').html("Estimated Converted Amount: " + amount.toFixed(8) + " Bitcoins");
     }
 
     function coinTOpts(e){
-        var COINrate =10000;
-        convertCoin.innerText = "Converted Amount :" +  (parseFloat(document.getElementById("cad").value) * COINrate) + "USD";
+        var COINrate = parseFloat($("#rate").val());
+        var coins =  parseFloat($("#bitcoins").val());
+        var amount = 0;
+
+        if (coins > 0)
+        {
+            amount = coins * COINrate;
+        }
+
+        $('#convertCoin').html("Estimated Converted Amount: " + amount.toFixed(2) + " USD");
     }
     </script>
 </html>

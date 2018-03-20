@@ -11,7 +11,7 @@ from . import forms, models
 
 def all_forums(request):
 
-    forum_list = models.Forum.objects.all()
+    forum_list = models.Forum.objects.all().order_by('-time')
     items_per_page = 10
 
     page_list = Paginator(forum_list, items_per_page)
@@ -50,8 +50,8 @@ def forum(request, forum_id):
             new_comment.set_post(forum)
             new_comment.save()
 
-            #after saving the comment, return back to the same page (with new blank form)
-            comment_form = forms.CommentForm()
+            #after saving the comment, return back to the same page
+            return HttpResponseRedirect(reverse('forum:forum', kwargs={'forum_id':forum_id}))
     else:
         comment_form = forms.CommentForm()
 

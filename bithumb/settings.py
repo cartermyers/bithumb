@@ -96,6 +96,7 @@ WSGI_APPLICATION = 'bithumb.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'shin202j$default',
@@ -103,6 +104,14 @@ DATABASES = {
         'PASSWORD': 'bound2Wavy',
         'HOST': 'shin202j.mysql.pythonanywhere-services.com',
     }
+
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': 'shin202j$default',
+    #    'USER': 'shin202j',
+    #    'PASSWORD': 'bound2Wavy',
+    #    'HOST': 'shin202j.mysql.pythonanywhere-services.com',
+    #}
 }
 
 
