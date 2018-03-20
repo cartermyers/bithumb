@@ -43,7 +43,7 @@ def login_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(redirect)
 
-    signup_form = forms.LoginForm()
+    signup_form = forms.SignupForm()
 
     if request.method == 'POST':
         login_form = forms.LoginForm(request.POST)
