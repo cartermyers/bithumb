@@ -29,7 +29,7 @@ class Observer(View):
     @staticmethod
     def update(subject):
         event = 'update'
-        channel = 'presence-' + type(subject).__name__
+        channel = type(subject).__name__
 
         try:
             channel += "_" + subject.pk
@@ -60,7 +60,7 @@ class Subject(object):
     def channel(self):
         #this is the channel on pusher that we will broadcast on
         #similar to the observer list in the traditional pattern
-        channel = 'presence-' + type(self).__name__
+        channel = type(self).__name__
         try:
             channel += "_" + self.pk
         except AttributeError:
@@ -81,7 +81,7 @@ class Subject(object):
                         cluster=pusher_cluster)
 
         #first, see if there are any users (if not, don't bother notifying)
-        if not pusher.channel_info(self.channel(), ['user_count'])['occupied']:
+        if not pusher.channel_info(self.channel(), ['occupied'])['occupied']:
             return
 
         pusher.trigger(
