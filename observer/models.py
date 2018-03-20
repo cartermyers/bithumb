@@ -29,7 +29,7 @@ class Observer(View):
     @staticmethod
     def update(subject):
         event = 'update'
-        channel = type(subject).__name__
+        channel = 'presence-' + type(subject).__name__
 
         try:
             channel += "_" + subject.pk
@@ -52,22 +52,21 @@ class Observer(View):
 
 class Subject(object):
 
-    def __inti__(self):
-        #this is the channel on pusher that we will broadcast on
-        #similar to the observer list in the traditional pattern
-        channel = type(self).__name__
-        try:
-            channel += "_" + self.pk
-        except AttributeError:
-            pass
-
     #interface that is implemented by child
     #must return a dict
     def get_state(self):
         return {}
 
-    def get_channel(self):
-        return self.channel
+    def channel(self):
+        #this is the channel on pusher that we will broadcast on
+        #similar to the observer list in the traditional pattern
+        channel = 'presence-' + type(self).__name__
+        try:
+            channel += "_" + self.pk
+        except AttributeError:
+            pass
+
+        return channel
 
     #this is the notify function with a push method
     def notify(self):
@@ -82,11 +81,11 @@ class Subject(object):
                         cluster=pusher_cluster)
 
         #first, see if there are any users (if not, don't bother notifying)
-        if not pusher.channel_info(self.channel, ['user_count'])['occupied']:
+        if not pusher.channel_info(self.channel(), ['user_count'])['occupied']:
             return
 
         pusher.trigger(
-            [self.channel, ],
+            [self.channel(), ],
             "update",
             {
                 'object': self.get_state(), #implemented in child class

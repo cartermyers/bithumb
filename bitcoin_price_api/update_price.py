@@ -20,7 +20,8 @@ def update_price():
         new_price = subject.get_state()['price']
         if new_price != old_state:
             old_state = new_price
+            print "Notifying {}".format(new_price)
             subject.notify()
 
-        #only check about every 5 seconds
-        time.sleep(5)
+        #only check about every 2 seconds
+        time.sleep(2)

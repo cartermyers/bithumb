@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     #third-party apps
     'bitcoin_price_api.apps.BitcoinPriceApiConfig',  #manual app, but the code is taken from github and modified
     'easy_thumbnails',
-    'background_task',
     'observer.apps.ObserverConfig', #code modified from https://github.com/pusher/django-pusherable
 
     #default apps:
