@@ -113,48 +113,49 @@
                 <tr>
                     <td>Posted by: {{ forum.poster }}</td>
                 </tr>
+                {% if forum.description %}
                 <tr>
-                    <td>Describtion</td>
+                    <td>Description</td>
                 </tr>
+                {% endif %}
                 </thead>
+                {% if forum.description %}
                 <tbody>
                 <tr>
                     <td>
-                        {% if forum.description %}
                         {{ forum.description }}
-                        {% endif %}
-
                     </td>
                 </tr>
                 </tbody>
+                {% endif %}
                 <thead>
                 <tr>
                     <td>Posted at: {{ forum.time }}</td>
                 </tr>
-                {% for comment in forum.comment_set_all %}
+                {% for comment in forum.comments_set.all %}
                 <tr>
                     <td>{{ comment.text }}</td>
                     <td>{{ comment.user }}</td>
                     <td>{{ comment.time }}</td>
-                    TODO: delete button
                 </tr>
                 {% endfor %}
+                {% if request.user.is_authenticated %}
                 <tr>
-                    <td>{Previous Comments}</td>
-                </tr>
-                <tr>
-                    <td>{Previous Comments}</td>
-                </tr>
-                <tr>
+                    <form method="POST" action="{% url 'forum:forum' forum_id=forum.pk %}" style="width: auto;">
+                        {% csrf_token %}
                     <td>
-                    <form action="" style="width: auto;">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="comments" id="comments" placeholder="comments">
-                        </div>
-                    </form>
+                        {{ comment_form.non_field_errors }}
+                        {% for field in comment_form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
                     </td>
-                    <td><button class="btn btn-primary"><i class="fas fa-reply"></i></button></td>
+                    <td><button type="submit" class="btn btn-primary"><i class="fas fa-reply"></i></button></td>
+                    </form>
                 </tr>
+                {% endif %}
                 </thead>
 
                     <!--<td>
@@ -162,12 +163,6 @@
                         <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </td> -->
             </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 text-right">
-            <button class="btn btn-primary">Go Back</button>
         </div>
     </div>
 
@@ -191,48 +186,3 @@
 </div>
 </body>
 </html>
-
-<!--
-Here is a specfic forum.<br/ ><br/>
-
-<!-- TODO: maybe use the truncation thing for long titles
-title; {{ forum.title }}<br/>
-
-posted by: {{ forum.poster }}<br/>
-
-{% if forum.description %}
-description: {{ forum.description }}<br/>
-{% endif %}
-
-{% ifequal request.user.pk forum.poster_id %}
-    <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}">Delete</a><br/>
-{% endifequal %}
-
-posted at: {{ forum.time }} <br/>
-
-And here are all of its comments:<br/><br/>
-
-{% for comment in forum.comments_set.all %}
-
-    {{ comment.text }}<br/>
-
-    posted by: {{ comment.user }}<br/>
-
-    posted at: {{ comment.time }}<br/>
-
-    {% ifequal request.user.pk comment.user_id %}
-        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}">Delete</a><br/>
-    {% endifequal %}
-    <br/><br/>
-
-{% endfor %}
-
-{% if request.user.is_authenticated %}
-And here is a form for new comments:<br /><br />
-<form method="POST" action="" style="width: 300px;">
-{% csrf_token %}
-{{ comment_form.as_p }}
-<button type="submit">Post</button>
-</form>
-{% endif %}
--->

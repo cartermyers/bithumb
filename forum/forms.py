@@ -12,6 +12,7 @@ class ForumForm(forms.ModelForm):
         fields = ['title', 'description']
 
 class CommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.TextInput({'class': "form-control", 'name': "comments", 'id': "comments",  'placeholder': "comments"}))
 
     class Meta:
         model = models.Comments
