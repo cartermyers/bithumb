@@ -1,4 +1,12 @@
 #here is the actual script to update the price
+
+#first, make sure the django settings are set up
+from django.conf import settings
+from .. import settings as my_settings
+
+if not settings.configured:
+    settings.configure(my_settings)
+
 import time
 from .exchanges import CoinDesk
 
