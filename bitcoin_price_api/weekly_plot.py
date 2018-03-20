@@ -30,9 +30,6 @@ def plot_historical_price(start='2018-01-01', end=None):
 if __name__ == "__main__":
     from datetime import datetime, timedelta
 
-    import os
-    file_path = os.path.realpath(__file__)
-
     #first, set the size of the graph
     plt.rcParams['figure.figsize'] = [13, 7.5]
 
@@ -46,4 +43,4 @@ if __name__ == "__main__":
 
     #and save that to an image
     plt.tight_layout()
-    plt.savefig(file_path + '/../../static/img/weekly_prices.png', format='png')
+    plt.savefig('/home/shin202j/bithumb/static/img/weekly_prices.png', format='png')

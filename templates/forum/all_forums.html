@@ -90,13 +90,13 @@
         </div>
     </div>
 
+    {% if request.user.is_authenticated %}
     <div class="row">
         <div class="col-lg-12 text-right">
-            {% if request.user.is_authenticated %}
             <a href="{% url 'forum:post' %}"><button class="btn btn-primary">Create Thread</button></a>
-            {% endif %}
         </div>
     </div>
+    {% endif %}
 
     {% if forums.has_previous %}
     <a href="?page={{ forums.previous_page_number }}">Previous</a>

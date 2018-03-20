@@ -1,42 +1,198 @@
-Here is a specfic forum.<br/ ><br/>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bithumb</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<!-- TODO: maybe use the truncation thing for long titles -->
-title; {{ forum.title }}<br/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" >Bithumb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-posted by: {{ forum.poster }}<br/>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'game:scoreboard' %}">Scoreboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
+            </li>
+            <!-- if request.user.is_authenticated -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account:profile' user_id=1 %}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
+            </li>
+            <!-- endif -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About Us</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <div class="btn-group">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Signup
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right p-3">
+                        <div class="my-3">
+                            <h3>Sign Up</h3>
+                        </div>
+                        <form action="" style="width: 300px;">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="verify password">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-dark float-right">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                </a>
+                <div class="dropdown-menu dropdown-menu-right p-3">
+                    <div class="my-3">
+                        <h3>Login</h3>
+                    </div>
+                    <form action="" style="width: 300px;">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-dark float-right">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
+        </div>
+    </div>
 
-{% if forum.description %}
-description: {{ forum.description }}<br/>
-{% endif %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Title: {{ forum.title }}</td>
+                </tr>
+                <tr>
+                    <td>Posted by: {{ forum.poster }}</td>
+                </tr>
+                {% if forum.description %}
+                <tr>
+                    <td>Description</td>
+                </tr>
+                {% endif %}
+                </thead>
+                {% if forum.description %}
+                <tbody>
+                <tr>
+                    <td>
+                        {{ forum.description }}
+                    </td>
+                </tr>
+                </tbody>
+                {% endif %}
+                <thead>
+                <tr>
+                    <td>Posted at: {{ forum.time }}</td>
+                    {% ifequal request.user.pk forum.poster_id %}
+                        <td>
+                            <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a>
+                        </td>
+                    {% endifequal %}
+                </tr>
+                {% for comment in forum.comments_set.all %}
+                <tr>
+                    <td>{{ comment.text }}</td>
+                    <td>{{ comment.user }}</td>
+                    <td>{{ comment.time }}</td>
+                    {% ifequal request.user.pk comment.user_id %}
+                    <td>
+                        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a>
+                    </td>
+                    {% endifequal %}
+                </tr>
+                {% endfor %}
+                {% if request.user.is_authenticated %}
+                <tr>
+                    <form method="POST" action="{% url 'forum:forum' forum_id=forum.pk %}" style="width: auto;">
+                        {% csrf_token %}
+                    <td>
+                        {{ comment_form.non_field_errors }}
+                        {% for field in comment_form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                    </td>
+                    <td><button type="submit" class="btn btn-primary"><i class="fas fa-reply"></i></button></td>
+                    </form>
+                </tr>
+                {% endif %}
+                </thead>
 
-{% ifequal request.user.pk forum.poster_id %}
-    <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}">Delete</a><br/>
-{% endifequal %}
+                    <!--<td>
+                        <button class="btn btn-primary"><i class="fas fa-reply"></i></button>
+                        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                    </td> -->
+            </table>
+        </div>
+    </div>
 
-posted at: {{ forum.time }} <br/>
-
-And here are all of its comments:<br/><br/>
-
-{% for comment in forum.comments_set.all %}
-
-    {{ comment.text }}<br/>
-
-    posted by: {{ comment.user }}<br/>
-
-    posted at: {{ comment.time }}<br/>
-
-    {% ifequal request.user.pk comment.user_id %}
-        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}">Delete</a><br/>
-    {% endifequal %}
-    <br/><br/>
-
-{% endfor %}
-
-{% if request.user.is_authenticated %}
-And here is a form for new comments:<br /><br />
-<form method="POST" action="" style="width: 300px;">
-{% csrf_token %}
-{{ comment_form.as_p }}
-<button type="submit">Post</button>
-</form>
-{% endif %}
+</div>
+<!-- Footer -->
+<div class="footer mt-4 py-4" style="padding-bottom: 60px; background:#dae0e5; height: 200px; color: #000000;">
+    <div class="container">
+        <div class="row">
+            <div id="footer">
+                <div class ="span12">
+                    <ul class="footer">
+                        <li> University of Regina </li>
+                        <li> Computer Science Department </li>
+                        <li> CS 476 Group Project</li>
+                        <li> By C. Myers, J. Shin</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
