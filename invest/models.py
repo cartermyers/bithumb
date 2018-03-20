@@ -34,8 +34,9 @@ class BankAccount(models.Model):
         self.save()
 
     def deposit_in_game_currency(self, new_amount):
+        self.user.set_highscore(new_amount)
+        self.user.save()
         self.in_game_currency += Decimal(str(new_amount))
-
 
     def get_bitcoins(self):
         return float(self.bitcoins)

@@ -131,12 +131,22 @@
                 <thead>
                 <tr>
                     <td>Posted at: {{ forum.time }}</td>
+                    {% ifequal request.user.pk forum.poster_id %}
+                        <td>
+                            <a href="{% url 'forum:delete_forum' forum_id=forum.pk %}"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a>
+                        </td>
+                    {% endifequal %}
                 </tr>
                 {% for comment in forum.comments_set.all %}
                 <tr>
                     <td>{{ comment.text }}</td>
                     <td>{{ comment.user }}</td>
                     <td>{{ comment.time }}</td>
+                    {% ifequal request.user.pk comment.user_id %}
+                    <td>
+                        <a href="{% url 'forum:delete_comment' comment_id=comment.pk %}"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a>
+                    </td>
+                    {% endifequal %}
                 </tr>
                 {% endfor %}
                 {% if request.user.is_authenticated %}

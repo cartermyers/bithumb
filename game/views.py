@@ -22,7 +22,7 @@ def play_game(request):
 
 def scoreboard(request):
     #get top 10 users by high score
-    top_users = User.objects.order_by('highscore')[:10]
+    top_users = User.objects.order_by('-highscore')[:10]
     return render(request, 'game/scoreboard.html', {'top_users': top_users})
 
 @login_required

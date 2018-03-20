@@ -38,7 +38,8 @@ class User(AbstractUser):
         self.password = new_pass
 
     def set_highscore(self, new_high):
-        self.highscore = new_high
+        if new_high > self.highscore:
+            self.highscore = new_high
 
     #getters
     def get_highscore(self):
