@@ -144,7 +144,7 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <h5 id="convertPTS">Converted amount: </h5>
+                    <h5 id="convertPTS">Estimated Converted amount: 0</h5>
                     <div class="col-lg-6">
                         <button type="submit" class="btn btn-dark">BUY</button>
                     </div>
@@ -170,7 +170,7 @@
                             </div>
                             {% endfor %}
                     </div>
-                    <h5 id="convertCoin">Converted amount: </h5>
+                    <h5 id="convertCoin">Estimated Converted amount: 0</h5>
                     <div class="col-lg-6">
                         <button type="submit" class="btn btn-dark">SELL</button>
                     </div>
@@ -209,8 +209,9 @@
     }
 
     function ptsTOcoin(e){
-        var PTSrate = parseFloat(document.getElementById("rate").value);
-        var pts = parseFloat(document.getElementById("scores").value);
+
+        var PTSrate = parseFloat($("#rate").val());
+        var pts = parseFloat($("#scores").val());
         var amount = 0;
 
         if (pts > 0)
@@ -218,12 +219,12 @@
             amount = pts / PTSrate;
         }
 
-        convertPTS.innerText = "Converted Amount: " + amount.toFixed(8) + " Bitcoins";
+        $('#convertPTS').html("Estimated Converted Amount: " + amount.toFixed(8) + " Bitcoins");
     }
 
     function coinTOpts(e){
-        var COINrate = parseFloat(document.getElementById("rate").value);
-        var coins =  parseFloat(document.getElementById("bitcoins").value);
+        var COINrate = parseFloat($("#rate").val());
+        var coins =  parseFloat($("#bitcoins").val());
         var amount = 0;
 
         if (coins > 0)
@@ -231,7 +232,7 @@
             amount = coins * COINrate;
         }
 
-        convertCoin.innerText = "Converted Amount: " + amount.toFixed(2) + " USD";
+        $('#convertCoin').html("Estimated Converted Amount: " + amount.toFixed(2) + " USD");
     }
     </script>
 </html>

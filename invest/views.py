@@ -17,10 +17,16 @@ class Invest(Observer):
         super(Invest, self).__init__()
         self.set_subject(CoinDesk())
 
-    def get(self, request):
+    def get(self, request, errors = None, bitcoin_form = None, in_game_currency_form = None):
         #forms on the page
-        bitcoin_form = forms.BitcoinToInGameCurrencyForm()
-        in_game_currency_form = forms.InGameCurrencyToBitcoinForm()
+        if not bitcoin_form:
+            bitcoin_form = forms.BitcoinToInGameCurrencyForm()
+
+        if not in_game_currency_form:
+            in_game_currency_form = forms.InGameCurrencyToBitcoinForm()
+
+        if errors:
+            messages.error(request, errors)
         #get the user's bank account info
         account = request.user.get_bank_account()
         #only show
@@ -35,6 +41,8 @@ def itemshop(request):
 
 @login_required
 def exchange_bitcoin_for_in_game_currency(request):
+    errors = None
+    bitcoin_form = None
     if request.method == "POST":
         bitcoin_form = forms.BitcoinToInGameCurrencyForm(request.POST)
 
@@ -46,14 +54,15 @@ def exchange_bitcoin_for_in_game_currency(request):
                 account.exchange_bitcoin_for_in_game_currency(bitcoin, rate)
                 return HttpResponseRedirect('invest:invest')
             except AssertionError:
-                request.session['error'] = "Sorry, you don't have enough in your account to make that exchange."
-                messages.error(request, "Sorry, you don't have enough in your account to make that exchange.")
+                errors = "Sorry, you don't have enough in your account to make that exchange."
 
     #if there are any errors:
-    return Invest.as_view(request)
+    return Invest.as_view(request, errors=errors, bitcoin_form=bitcoin_form)
 
 @login_required
 def exchange_in_game_currency_for_bitcoin(request):
+    errors = None
+    in_game_currency_form = None
     if request.method == "POST":
         in_game_currency_form = forms.InGameCurrencyToBitcoinForm(request.POST)
 
@@ -65,8 +74,8 @@ def exchange_in_game_currency_for_bitcoin(request):
                 account.exchange_in_game_currency_for_bitcoin(in_game_currency, rate)
                 return HttpResponseRedirect('invest:invest')
             except AssertionError:
-                request.session['error'] = "Sorry, you don't have enough in your account to make that exchange."
-                messages.error(request, "Sorry, you don't have enough in your account to make that exchange.")
+                errors = "Sorry, you don't have enough in your account to make that exchange."
+
 
     #if there are any errors:
-    return Invest.as_view(request)
+    return Invest.as_view(request, errors=errors, in_game_currency_form=in_game_currency_form)
