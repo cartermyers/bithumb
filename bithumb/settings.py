@@ -101,14 +101,6 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': 'shin202j$default',
-    #    'USER': 'shin202j',
-    #    'PASSWORD': 'bound2Wavy',
-    #    'HOST': 'shin202j.mysql.pythonanywhere-services.com',
-    #}
 }
 
 

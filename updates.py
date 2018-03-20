@@ -22,21 +22,8 @@ def is_lock_free():
 if not is_lock_free():
     sys.exit()
 
-#here is the actual script to update the price
-import time
+#here are all of the update functions:
+from bitcoin_price_api.update_price import update_price
 
-from bitcoin_price_api.exchanges import CoinDesk
-
-subject = CoinDesk()
-
-#use a variable to see if the state has changed and we need to push to the client
-old_state = subject.get_state()['price']
-
-while True:
-    new_price = subject.get_state()['price']
-    if new_price != old_state:
-        old_state = new_price
-        subject.notify()
-
-    #only check about every 5 seconds
-    time.sleep(5)
+#this function has a while loop that should run forever
+update_price()

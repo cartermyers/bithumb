@@ -51,10 +51,15 @@ class Observer(View):
             event=event)
 
 class Subject(object):
-    #this is the channel on pusher that we will broadcast on
-    #similar to the observer list in the traditional pattern
-    def channel(self):
 
+    #interface that is implemented by child
+    #must return a dict
+    def get_state(self):
+        return {}
+
+    def channel(self):
+        #this is the channel on pusher that we will broadcast on
+        #similar to the observer list in the traditional pattern
         channel = type(self).__name__
         try:
             channel += "_" + self.pk
@@ -62,11 +67,6 @@ class Subject(object):
             pass
 
         return channel
-
-    #interface that is implemented by child
-    #must return a dict
-    def get_state(self):
-        return {}
 
     #this is the notify function with a push method
     def notify(self):
@@ -79,6 +79,10 @@ class Subject(object):
                         key=settings.PUSHER_KEY,
                         secret=settings.PUSHER_SECRET,
                         cluster=pusher_cluster)
+
+        #first, see if there are any users (if not, don't bother notifying)
+        if not pusher.channel_info(self.channel(), ['occupied'])['occupied']:
+            return
 
         pusher.trigger(
             [self.channel(), ],
