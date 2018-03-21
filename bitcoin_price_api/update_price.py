@@ -23,5 +23,5 @@ def update_price():
             old_state = new_price
             subject.notify()
 
-        #only check about every 2 seconds
-        time.sleep(2)
+        #only check about every 5 seconds
+        time.sleep(5)
