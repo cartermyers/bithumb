@@ -56,24 +56,23 @@
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="form-group">
-        <label for="title">title:</label>
-        <input type="title" class="form-control" id="title">
+<form method="POST" action="{% url 'forum:post' %}" style="width: auto;">
+    {% csrf_token %}
+    <div class="container mt-5">
+        {{ forum_form.non_field_errors }}
+        {% for field in forum_form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field.errors }}
+                {{ field }}
+            </div>
+            <hr />
+        {% endfor %}
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Post</button>
+        </div>
     </div>
-    <hr>
-    <div class="form-group">
-        <label for="comment">describtion:</label>
-        <textarea class="form-control" rows="5" id="desc"></textarea>
-    </div>
-    <hr>
-    <div class="row">
-        <button class="btn btn-primary">Post</button>
-    </div>
-
-</div>
-
-
+</form>
 
 <!-- Footer -->
 <div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
