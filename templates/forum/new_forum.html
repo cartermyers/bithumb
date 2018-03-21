@@ -1,7 +1,92 @@
-Here is a form for a new forum:<br/>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bithumb</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<form method="POST" action="{% url 'forum:post' %}" style="width: 300px;">
-{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Post</button>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" >Bithumb</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'game:scoreboard' %}">Scoreboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'forum:all_forums' %}">Forum</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'invest:itemshop' %}">Item Shop</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'invest:invest' %}">Invest</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About Us</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:myprofile' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account:logout' %}">Log out</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<form method="POST" action="{% url 'forum:post' %}" style="width: auto;">
+    {% csrf_token %}
+    <div class="container mt-5">
+        {{ forum_form.non_field_errors }}
+        {% for field in forum_form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field.errors }}
+                {{ field }}
+            </div>
+            <hr />
+        {% endfor %}
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Post</button>
+        </div>
+    </div>
 </form>
+
+<!-- Footer -->
+<div class="footer mt-4 py-4" style="background:#dae0e5; height: 200px; color: #000000;">
+    <div class="container">
+        <div class="row">
+            <h3>University of Regina</h3>
+        </div>
+        <div class="row">
+            <h5>Computer Science Dept.</h5>
+        </div>
+        <div class="row">
+            <h7> CS476 Group Proj. by C. Myers & J. Shin</h7>
+        </div>
+    </div>
+</div>
+</body>
+</html>

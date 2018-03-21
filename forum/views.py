@@ -71,7 +71,7 @@ def post_forum(request):
     else:
         form = forms.ForumForm()
 
-    return render(request, 'forum/new_forum.html', {'form': form})
+    return render(request, 'forum/new_forum.html', {'forum_form': form})
 
 @login_required
 def delete_comment(request, comment_id):
