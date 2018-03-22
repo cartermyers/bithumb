@@ -39,10 +39,9 @@ class User(AbstractUser):
         self.save()
 
     def set_highscore(self, new_high):
-        if new_high > self.highscore:
+        if Decimal(str(new_high)) > self.highscore:
             self.highscore = new_high
             self.save()
-
 
     #getters
     def get_highscore(self):

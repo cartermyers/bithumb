@@ -31,6 +31,7 @@ def send_score(request):
             new_score = 0
 
         account.deposit_in_game_currency(new_score)
+        request.user.set_highscore(new_score)
         account.save()
 
         #return success with new amount for user
