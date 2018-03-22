@@ -13,6 +13,7 @@ from bitcoin_price_api.exchanges import CoinDesk
 from observer.models import Observer
 
 from . import forms
+from . import models
 
 class Invest(Observer):
 
@@ -32,7 +33,9 @@ class Invest(Observer):
                 "subject": self.get_subject(), "bitcoin_form": bitcoin_form, "in_game_currency_form": in_game_currency_form})
 
 def itemshop(request):
-    return render(request, 'invest/itemshop.html')
+    trophies = models.Collectible.objects.all()
+
+    return render(request, 'invest/itemshop.html', {'trophies': trophies})
 
 @login_required
 def exchange_bitcoin_for_in_game_currency(request):

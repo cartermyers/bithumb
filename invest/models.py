@@ -55,7 +55,7 @@ class Collectible(models.Model):
     #we might change the max later
     price = models.DecimalField(max_digits=17, decimal_places=2)
     name = models.CharField(max_length=127)
-    image = models.ImageField(upload_to='img/collectibles/')
+    image = models.ImageField(upload_to='collectibles/')
 
     def get_name(self):
         return self.name
