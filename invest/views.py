@@ -55,6 +55,9 @@ def itemshop(request):
 
             try:
                 request.user.buy_collectible(collectible)
+                #and add the new objects for the view
+                owned.append(collectible)
+                balance -= collectible.get_price()
             except AssertionError:
                 messages.error(request, "You don't have enough money for this item.")
 

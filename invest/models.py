@@ -37,12 +37,14 @@ class BankAccount(models.Model):
         self.user.set_highscore(new_amount)
         self.user.save()
         self.in_game_currency += Decimal(str(new_amount))
+        self.save()
 
     def withdraw_in_game_currency(self, amount):
         amount = Decimal(str(amount))
         if self.in_game_currency < amount:
             raise AssertionError
         self.in_game_currency -= amount
+        self.save()
 
     def get_bitcoins(self):
         return float(self.bitcoins)
