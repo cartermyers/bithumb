@@ -71,7 +71,7 @@
                     <td>Title: {{ forum.title }}</td>
                 </tr>
                 <tr>
-                    <td>Posted by: {{ forum.poster }}</td>
+                    <td>Posted by: <a href="{% url 'account:profile' user_id=forum.poster_id %}">{{ forum.poster }}</a></td>
                 </tr>
                 {% if forum.description %}
                 <tr>
