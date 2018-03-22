@@ -112,33 +112,31 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
-                <img src="{% static "img/logo.png" %}" alt="LOGO" style ="width:auto; height: 100px;">
+                <img src="{% static 'img/logo.png' %}" style="width:640px;height:100px">
             </div>
         </div>
-        <!--d-flex justify-content-center align-items-center -->
+
     </div>
     <div class="container d-flex justify-content-center align-items-center mt-5">
         <div class="row">
-            <div class="card mt-3" style="width: 320px">
-                <h7>Score: 0 </h7>
-            </div>
-        </div>
-        <div class="row">
-            <div class="card mt-3" style="width:320px">
-                <h7>Bitcoin Rate(USD): $10,000 / bitcoin </h7>
-            </div>
+                {% if request.user.is_authenticated %}
+                <h3>Total Score (USD): <span id="total_score">{{ total_score }}</span></h3>
+                {% else %}
+                <h3>Log in to play!</h3>
+                {% endif %}
         </div>
     </div>
-    Im going to align later
     <div class="row">
         <div class="col-lg-12 d-flex justify-content-center align-items-center mb-3">
             <div class="card mt-3" style="width: 320px; height: 480px;">
-                <!--Before Loggin in-->
+                {% if request.user.is_authenticated %}
+                <iframe src ="{% url 'game:game' %}" style="width: 320px; height:480px"></iframe>
+                {% else %}
                 <iframe frameborder="0" width="320" height="480" src="https://biteable.com/watch/embed/pipeline-1806446" allowfullscreen="false" autoplay="1"></iframe>
-                <!-- After Logging in -->
-
+                {% endif %}
             </div>
         </div>
+    </div>
     </div>
 
 <!-- Footer -->

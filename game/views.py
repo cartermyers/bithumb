@@ -13,13 +13,6 @@ from account.models import User
 def game(request):
     return render(request, 'game/game.html')
 
-@login_required
-def play_game(request):
-
-    total_in_game_currency = request.user.get_bank_account().get_in_game_currency()
-
-    return render(request, 'game/index.html', {'total_score': total_in_game_currency})
-
 def scoreboard(request):
     #get top 10 users by high score
     top_users = User.objects.order_by('-highscore')[:10]
