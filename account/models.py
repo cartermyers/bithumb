@@ -53,6 +53,16 @@ class User(AbstractUser):
 
         return collectibles
 
+    def buy_collectible(self, collectible):
+        if self.bank_account.get_in_game_currency() < collectible.get_price():
+            raise AssertionError
+
+        self.bank_account.withdraw_in_game_currency(collectible.get_price())
+
+        #and add to account
+        b = BankAccountToCollectible(account_id=self.bank_account_id, collectible_id=collectible.pk)
+        b.save()
+
 
 
 

@@ -35,11 +35,30 @@ class Invest(Observer):
 def itemshop(request):
     trophies = models.Collectible.objects.all()
     owned = None
+    balance = None
 
     if request.user.is_authenticated:
         owned = request.user.get_collectibles()
+        balance = request.user.get_bank_account().get_in_game_currency()
 
-    return render(request, 'invest/itemshop.html', {'trophies': trophies, 'owned': owned})
+        #validate the form here
+        if request.method == "POST":
+            #make sure the collectible exists:
+            try:
+                collectible = models.Collectible.objects.get(pk=int(request.POST['trophy']))
+            except models.Collectible.DoesNotExist:
+                message.error(request, "Item does not exist.")
+
+            #make sure the user doesn't own it
+            if collectible in owned:
+                messages.error(request, "You already own this item.")
+
+            try:
+                request.user.buy_collectible(collectible)
+            except AssertionError:
+                messages.error(request, "You don't have enough money for this item.")
+
+    return render(request, 'invest/itemshop.html', {'trophies': trophies, 'owned': owned, 'balance': balance})
 
 @login_required
 def exchange_bitcoin_for_in_game_currency(request):
