@@ -29,13 +29,11 @@ class BankAccount(models.Model):
         if in_game_currency > self.in_game_currency:
             raise AssertionError
 
-        self.withdraw_in_game_currency(in_game_currency)
+        self.in_game_currency -= Decimal(str(in_game_currency))
         self.bitcoins += Decimal(str(in_game_currency / rate))
         self.save()
 
     def deposit_in_game_currency(self, new_amount):
-        self.user.set_highscore(new_amount)
-        self.user.save()
         self.in_game_currency += Decimal(str(new_amount))
         self.save()
 

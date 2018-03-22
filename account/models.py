@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from decimal import Decimal
+
 from invest.models import BankAccount, BankAccountToCollectible
 
 class User(AbstractUser):
@@ -39,10 +41,9 @@ class User(AbstractUser):
         self.save()
 
     def set_highscore(self, new_high):
-        if new_high > self.highscore:
+        if Decimal(str(new_high)) > self.highscore:
             self.highscore = new_high
             self.save()
-
 
     #getters
     def get_highscore(self):
