@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from invest.models import BankAccount
+from invest.models import BankAccount, BankAccountToCollectible
 
 class User(AbstractUser):
     """ See https://docs.djangoproject.com/en/2.0/ref/contrib/auth/#django.contrib.auth.models.User
@@ -47,6 +47,11 @@ class User(AbstractUser):
 
     def get_bank_account(self):
         return BankAccount.objects.get(pk=self.bank_account_id)
+
+    def get_collectibles(self):
+        collectibles = [obj.get_collectible() for obj in BankAccountToCollectible.objects.filter(account_id=self.bank_account_id)]
+
+        return collectibles
 
 
 

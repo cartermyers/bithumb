@@ -34,8 +34,12 @@ class Invest(Observer):
 
 def itemshop(request):
     trophies = models.Collectible.objects.all()
+    owned = None
 
-    return render(request, 'invest/itemshop.html', {'trophies': trophies})
+    if request.user.is_authenticated:
+        owned = request.user.get_collectibles()
+
+    return render(request, 'invest/itemshop.html', {'trophies': trophies, 'owned': owned})
 
 @login_required
 def exchange_bitcoin_for_in_game_currency(request):

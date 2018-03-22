@@ -81,3 +81,5 @@ class BankAccountToCollectible(models.Model):
     collectible = models.ForeignKey(Collectible, on_delete=models.CASCADE)
 
     #TODO: setters and getters
+    def get_collectible(self):
+        return self.collectible
