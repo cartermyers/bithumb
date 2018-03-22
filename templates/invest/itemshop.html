@@ -8,6 +8,9 @@
     <title>Bithumb</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    {% load static %}
+    {% load thumbnail %}
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -104,44 +107,37 @@
     <div class="row">
         <div class="col-lg-12">
             <h3>Item Shop</h3>
-            <div class="card mt-3" style="width: 100%; height: 30vh; overflow-x: scroll">
+            <div>USD balance: {{ balance }}</div>
+            {% for error in messages %}
+            <div>{{ error }}</div>
+            {% endfor %}
+            <div class="card mt-3" style="width: 110%; height: 30vh; overflow-x: scroll">
                 <div class="card-body p-3 row">
+                    {% for trophy in trophies %}
                     <div class="col-lg-3">
+                        {{ trophy.name }}
                         <div class="card" style="width: 100%; height: 100%;">
                             <div class="card-body p-3">
-                                <button class="btn btn-dark float-right mt-3">Buy</button>
-                                <!-- HTML 5 Canvas Here -->
-                                Juno Shin
+                                {% thumbnail trophy.image 200x200 crop as thumb %}
+                                <img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="{{ trophy.name }}"/>
                             </div>
                         </div>
+                        USD: {{ trophy.price }}
+                        {% if request.user.is_authenticated %}
+                            {% if trophy in owned %}
+                                <div class="float-right mt-3">You own this trophy!</div>
+                            {% elif trophy.price <= balance %}
+                                <form method="POST" action="{% url 'invest:itemshop' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="trophy" value="{{ trophy.pk }}">
+                                    <button type="submit" class="btn btn-dark float-right mt-3">Buy</button>
+                                </form>
+                            {% else %}
+                                <div class="float-right mt-3">You don't have enough to buy this item yet.</div>
+                            {% endif %}
+                        {% endif %}
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card" style="width: 100%; height: 100%;">
-                            <div class="card-body p-3">
-                                <button class="btn btn-dark float-right mt-3">Buy</button>
-                                <!-- HTML 5 Canvas Here -->
-                                Juno Shin
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card" style="width: 100%; height: 100%;">
-                            <div class="card-body p-3">
-                                <button class="btn btn-dark float-right mt-3">Buy</button>
-                                <!-- HTML 5 Canvas Here -->
-                                Juno Shin
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card" style="width: 100%; height: 100%;">
-                            <div class="card-body p-3">
-                                <button class="btn btn-dark float-right mt-3">Buy</button>
-                                <!-- HTML 5 Canvas Here -->
-                                Juno Shin
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

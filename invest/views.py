@@ -13,6 +13,7 @@ from bitcoin_price_api.exchanges import CoinDesk
 from observer.models import Observer
 
 from . import forms
+from . import models
 
 class Invest(Observer):
 
@@ -32,7 +33,35 @@ class Invest(Observer):
                 "subject": self.get_subject(), "bitcoin_form": bitcoin_form, "in_game_currency_form": in_game_currency_form})
 
 def itemshop(request):
-    return render(request, 'invest/itemshop.html')
+    trophies = models.Collectible.objects.all()
+    owned = None
+    balance = None
+
+    if request.user.is_authenticated:
+        owned = request.user.get_collectibles()
+        balance = request.user.get_bank_account().get_in_game_currency()
+
+        #validate the form here
+        if request.method == "POST":
+            #make sure the collectible exists:
+            try:
+                collectible = models.Collectible.objects.get(pk=int(request.POST['trophy']))
+            except models.Collectible.DoesNotExist:
+                message.error(request, "Item does not exist.")
+
+            #make sure the user doesn't own it
+            if collectible in owned:
+                messages.error(request, "You already own this item.")
+
+            try:
+                request.user.buy_collectible(collectible)
+                #and add the new objects for the view
+                owned.append(collectible)
+                balance -= collectible.get_price()
+            except AssertionError:
+                messages.error(request, "You don't have enough money for this item.")
+
+    return render(request, 'invest/itemshop.html', {'trophies': trophies, 'owned': owned, 'balance': balance})
 
 @login_required
 def exchange_bitcoin_for_in_game_currency(request):
