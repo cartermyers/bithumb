@@ -72,8 +72,9 @@ def profile(request, user_id=None):
         user_id = request.user.pk
 
     user = get_object_or_404(models.User, pk=user_id)
+    collectibles = user.get_collectibles()
 
-    return render(request, 'account/profile.html', {'user': user})
+    return render(request, 'account/profile.html', {'user': user, 'collectibles': collectibles})
 
 def logout_view(request):
     logout(request)

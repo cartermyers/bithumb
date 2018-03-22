@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from invest.models import BankAccount
+from invest.models import BankAccount, BankAccountToCollectible
 
 class User(AbstractUser):
     """ See https://docs.djangoproject.com/en/2.0/ref/contrib/auth/#django.contrib.auth.models.User
@@ -36,10 +36,13 @@ class User(AbstractUser):
     #setters
     def set_password(self, new_pass):
         self.password = new_pass
+        self.save()
 
     def set_highscore(self, new_high):
         if new_high > self.highscore:
             self.highscore = new_high
+            self.save()
+
 
     #getters
     def get_highscore(self):
@@ -47,6 +50,21 @@ class User(AbstractUser):
 
     def get_bank_account(self):
         return BankAccount.objects.get(pk=self.bank_account_id)
+
+    def get_collectibles(self):
+        collectibles = [obj.get_collectible() for obj in BankAccountToCollectible.objects.filter(account_id=self.bank_account_id)]
+
+        return collectibles
+
+    def buy_collectible(self, collectible):
+        if self.bank_account.get_in_game_currency() < collectible.get_price():
+            raise AssertionError
+
+        self.bank_account.withdraw_in_game_currency(collectible.get_price())
+
+        #and add to account
+        b = BankAccountToCollectible(account_id=self.bank_account_id, collectible_id=collectible.pk)
+        b.save()
 
 
 
