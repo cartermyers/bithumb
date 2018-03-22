@@ -12,10 +12,10 @@ if len(Collectible.objects.all()) > 0:
     exit()
 
 #else create all the collectibles
-bronze = Collectible(price=Decimal('100'), name='Bronze trophy', image='static/img/collectibles/bronze.png')
-silver = Collectible(price=Decimal('1000'), name='Silver trophy', image='static/img/collectibles/silver.png')
-gold = Collectible(price=Decimal('10000'), name='Gold trophy', image='static/img/collectibles/gold.png')
-bitcoin = Collectible(price=Decimal('100000'), name='Bitcoin trophy', image='static/img/collectibles/bitcoin.png')
+bronze = Collectible(price=Decimal('100'), name='Bronze trophy', image='collectibles/bronze.png')
+silver = Collectible(price=Decimal('1000'), name='Silver trophy', image='collectibles/silver.png')
+gold = Collectible(price=Decimal('10000'), name='Gold trophy', image='collectibles/gold.png')
+bitcoin = Collectible(price=Decimal('100000'), name='Bitcoin trophy', image='collectibles/bitcoin.png')
 
 #and save them all:
 bronze.save()
