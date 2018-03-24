@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'invest.apps.InvestConfig',
     'forum.apps.ForumConfig',
+    'builder.apps.BuilderConfig',
 
     #third-party apps
     'bitcoin_price_api.apps.BitcoinPriceApiConfig',  #manual app, but the code is taken from github and modified
