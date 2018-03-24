@@ -5,6 +5,8 @@ from django.db import models
 
 from decimal import Decimal
 
+from builder.models import Builder
+
 class BankAccount(models.Model):
     #see https://en.bitcoin.it/wiki/Units
     #min value is 1 satoshi (8 decimal places)
@@ -72,11 +74,31 @@ class Collectible(models.Model):
     def get_image(self):
         return self.image.url
 
-    #This should need no setters as this is added directly to the DB by devs (static objects)
-
     def __str__(self):
         return self.name
 
+    #this has no setters because it is handled by the builder
+
+
+class CollectibleBuilder(Builder):
+
+    def __init__(self):
+        self.collectible = Collectible()
+
+    def set_price(self, price):
+        self.collectible.price = price
+
+    def set_name(self, name):
+        self.collectible.name = name
+
+    def set_image(self, src):
+        self.collectible.image = src
+
+    def save(self):
+        self.collectible.save()
+
+    def get_result(self):
+        return self.collectible
 
 
 #here's another model to keep track of the many-to-many relationship

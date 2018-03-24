@@ -76,7 +76,7 @@
             <tbody>
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ user.username }}</td>
+                    <td><a href="{% url 'account:profile' user_id=user.pk %}">{{ user.username }}</a></td>
                     <td>{{ user.highscore }}</td>
                 </tr>
             </tbody>
