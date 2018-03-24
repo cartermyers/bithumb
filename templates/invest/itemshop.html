@@ -66,7 +66,9 @@
     <div class="row">
         <div class="col-lg-12">
             <h3>Item Shop</h3>
+            {% if balance %}
             <div>USD balance: {{ balance }}</div>
+            {% endif %}
             {% for error in messages %}
             <div>{{ error }}</div>
             {% endfor %}
