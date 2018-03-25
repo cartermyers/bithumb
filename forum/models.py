@@ -18,9 +18,27 @@ class Forum(models.Model):
 
     def set_poster(self, user):
         self.poster = user
+        self.save()
 
-    #TODO: setters and getters
-    #also observer methods
+    def set_description(self, text):
+        self.description = text
+        self.save()
+
+    def set_title(self, new_title):
+        self.title = new_title
+        self.save()
+
+    def get_title(self):
+        return self.title
+
+    def get_description(self):
+        return self.description
+
+    def get_time(self):
+        return self.time
+
+    def get_poster(self):
+        return self.poster
 
 class Comments(models.Model):
     post = models.ForeignKey(Forum, on_delete=models.CASCADE)
@@ -38,5 +56,3 @@ class Comments(models.Model):
     def set_post(self, new_post):
         self.post = new_post
     #TODO: setters and getters
-
-    #also observer methods? maybe a mixin?
