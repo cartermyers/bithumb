@@ -66,12 +66,3 @@ class User(AbstractUser):
         #and add to account
         b = BankAccountToCollectible(account_id=self.bank_account_id, collectible_id=collectible.pk)
         b.save()
-
-
-
-
-class Admin(User):
-    """ Admins have all the same functionality as regular users, but with some extra functionalities """
-    pass
-
-    #TODO: setters and getters

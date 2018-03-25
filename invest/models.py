@@ -52,9 +52,6 @@ class BankAccount(models.Model):
     def get_in_game_currency(self):
         return float(self.in_game_currency)
 
-    #TODO: setters
-    #also convert (private), and withdraw and deposit (both for investments) OR do these belong as views?
-
 #these are in-game Collectibles that users can purchase
 #with in-game currency
 #This class is only edited by devs

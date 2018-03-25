@@ -21,6 +21,8 @@ class Invest(Observer):
         super(Invest, self).__init__()
         self.set_subject(CoinDesk())
 
+    #this is the display function in the Observer pattern pseudocode
+    # it's named as "get" to comply with Django functionality
     def get(self, request, bitcoin_form = forms.BitcoinToInGameCurrencyForm(), in_game_currency_form = forms.InGameCurrencyToBitcoinForm()):
 
         #get the user's bank account info
