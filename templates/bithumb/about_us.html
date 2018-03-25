@@ -60,24 +60,16 @@
     <div class="row">
         <div class="body col-lg-12 mt-4 py-4">
             <h1>About Us</h1>
-            <h3>TODO????</h3>
-            <h1>니 미 시 발 개 좆 같 네</h1>
-            <p>Cryptocurrency is a digital asset that is starting to gain popularity in the public.
-            However, there are many that do not understand the complexities of these non-traditional currencies.
-            Concepts such as decentralization, generation, and (the most appealing) investing can be confusing and too technical
-            for most lay people to understand.</p>
-
-            <p>To show how bitcoin and other cryptocurrencies actually work (on a rudimentary level), we are proposing a simple
-                game as an introduction to cryptocurrencies. To establish the virtual environment, we are going to make two
-                parts in our project: the mining game and simple investment procedure. There are various way to obtain
-                cryptocurrency, one way that many people are interested in is mining. Therefore, we are going to simplify the
-                mining process as an arcade game, where users “mine” to earn in-game currency by playing. In cryptocurrency
-                mining, as time goes, the difficulty escalates, as we will attempt to mimic with the arcade game difficulty.</p>
-
-            <p>After earning in-game currency, users are able to purchase in-game add-ons, such as new backgrounds or new
-                characters. Additionally, users can “invest” in some cryptocurrency with a relative exchange rate. This way,
-                users can simulate investing in cryptocurrency -- while earning (or losing) in-game currency -- with no
-                real-life risk.
+            <h3>Game</h3>
+            <p>
+                Bithumb is a place to try and learn about Bitcoin! Play the <a href="{% url 'index' %}">game</a> to earn in-game currency (as USD), and try
+                your hand at <a href="{% url 'invest:invest'%}">investing</a> in "Bitcoin" using real-time exchange rates of actual Bitcoin. See if you can
+                earn all of the <a href="{% url 'invest:itemshop' %}">collectibles</a>
+                or make the <a href="{% url 'game:scoreboard'%}">highscores</a>!
+            </p>
+            <h3>Forum</h3>
+            <p>
+                Wanna see who else wants to learn about Bitcoin? Is there something you don't understand? Check out our <a href="{% url 'forum:all_forums' %}">forums</a> to talk to others.
             </p>
         </div>
     </div>
