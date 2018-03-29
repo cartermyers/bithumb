@@ -16,15 +16,15 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PUSHER_CLUSTER = "us2"
-PUSHER_KEY = "49f4ea849a621df2147f"
+PUSHER_KEY = "I don't think this is needed"
 PUSHER_APP_ID = "493721"
-PUSHER_SECRET = "05a5fc810d7743b89f08"
+PUSHER_SECRET = "You shouldn't know this"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@#v9+b*bh*cf&myh-*krb&#kk&d=6qhtr^og)evh=54)as7jl='
+SECRET_KEY = 'This is a secret!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
